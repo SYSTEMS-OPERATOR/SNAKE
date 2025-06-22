@@ -1,13 +1,13 @@
 {
   "name": "snake-on-surfaces",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Snake on Surfaces",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write ."
   },
   "dependencies": {

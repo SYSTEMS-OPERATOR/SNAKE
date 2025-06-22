@@ -1,24 +1,37 @@
-import * as THREE from 'three';
+import { Grid } from './core/Grid';
+import { Snake } from './core/Snake';
+import { GameLoop } from './core/GameLoop';
+import { CubeAdapter } from './shapes/CubeAdapter';
+import { GameRenderer } from './render/GameRenderer';
+import { Fruit } from './core/Fruit';
+import { Input } from './core/Input';
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const adapter = new CubeAdapter(5);
+const grid = new Grid(5, adapter);
+const snake = new Snake({ face: 0, u: 2, v: 2 });
+const fruit = new Fruit(grid);
+fruit.spawn(snake.body);
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+const loop = new GameLoop(() => {
+  const next = grid.getNeighbor(snake.body[0], snake.direction);
+  if (snake.hitsSelf(next)) {
+    loop.state = 2; // GAME_OVER
+    return;
+  }
+  snake.step(next);
+  if (
+    next.face === fruit.cell.face &&
+    next.u === fruit.cell.u &&
+    next.v === fruit.cell.v
+  ) {
+    snake.grow();
+    fruit.spawn(snake.body);
+    fruit.eat();
+  }
+});
 
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+new Input(snake, () => loop.togglePause());
+const renderer = new GameRenderer(snake, fruit, adapter, true);
+loop.on('tick', () => renderer.update());
+loop.start();
 
-camera.position.z = 5;
-
-function animate() {
-  requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-  renderer.render(scene, camera);
-}
-
-animate();

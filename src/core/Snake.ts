@@ -1,49 +1,55 @@
-import { Cell } from './Grid';
-
-export type Direction = 'up' | 'down' | 'left' | 'right';
+import type { Cell, Direction } from './Grid';
 
 export class Snake {
   body: Cell[];
   direction: Direction = 'right';
+  private growFlag = false;
   nextDirections: Direction[] = [];
 
   constructor(start: Cell) {
     this.body = [start];
   }
 
-  enqueue(dir: Direction) {
+
+  enqueueDirection(dir: Direction) {
     this.nextDirections.push(dir);
   }
 
-  step(gridSize: number) {
+  step(nextHead: Cell) {
     if (this.nextDirections.length > 0) {
       const next = this.nextDirections.shift()!;
       if (!this.isOpposite(next)) {
         this.direction = next;
       }
     }
-    const head = { ...this.body[0] };
-    switch (this.direction) {
-      case 'up':
-        head.v = (head.v - 1 + gridSize) % gridSize;
-        break;
-      case 'down':
-        head.v = (head.v + 1) % gridSize;
-        break;
-      case 'left':
-        head.u = (head.u - 1 + gridSize) % gridSize;
-        break;
-      case 'right':
-        head.u = (head.u + 1) % gridSize;
-        break;
+
+    this.body.unshift(nextHead);
+    if (!this.growFlag) {
+      this.body.pop();
+    } else {
+      this.growFlag = false;
     }
-    this.body.unshift(head);
-    this.body.pop();
   }
 
   grow() {
-    const tail = this.body[this.body.length - 1];
-    this.body.push({ ...tail });
+    this.growFlag = true;
+  }
+
+  hitsSelf(cell: Cell) {
+    return this.body.some(
+      (c) => c.face === cell.face && c.u === cell.u && c.v === cell.v
+    );
+  }
+
+  outOfBounds(cell: Cell, gridSize: number) {
+    return (
+      cell.u < 0 ||
+      cell.u >= gridSize ||
+      cell.v < 0 ||
+      cell.v >= gridSize ||
+      cell.face < 0 ||
+      cell.face > 5
+    );
   }
 
   private isOpposite(dir: Direction) {
