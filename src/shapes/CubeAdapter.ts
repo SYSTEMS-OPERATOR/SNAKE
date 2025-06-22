@@ -9,6 +9,10 @@ export class CubeAdapter implements IShapeAdapter {
     return { u: this.size, v: this.size };
   }
 
+  getFaceCount() {
+    return 6;
+  }
+
   toWorld(cell: Cell): THREE.Vector3 {
     const offset = this.size / 2 - 0.5;
     const x = cell.u - offset;

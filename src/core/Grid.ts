@@ -1,17 +1,17 @@
 export type Cell = { face: number; u: number; v: number };
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
-import { CubeAdapter } from '../shapes/CubeAdapter';
+import type { IShapeAdapter } from '../shapes/IShapeAdapter';
 
 export class Grid {
   constructor(
     public size: number,
-    private adapter: CubeAdapter
+    private adapter: IShapeAdapter
   ) {}
 
   randomCell(excluded: Cell[]): Cell {
     const cells: Cell[] = [];
-    for (let face = 0; face < 6; face++) {
+    for (let face = 0; face < this.adapter.getFaceCount(); face++) {
       for (let u = 0; u < this.size; u++) {
         for (let v = 0; v < this.size; v++) {
           if (
