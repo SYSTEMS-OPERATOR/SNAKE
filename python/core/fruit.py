@@ -7,13 +7,15 @@ from .grid import Grid
 class Fruit:
     grid: Grid
     cell: Cell
+    score: int
 
     def __init__(self, grid: Grid) -> None:
         self.grid = grid
         self.cell = Cell(0, 0, 0)
+        self.score = 0
 
     def spawn(self, snake_body: list[Cell]) -> None:
         self.cell = self.grid.random_cell(snake_body)
 
     def eat(self) -> None:
-        pass
+        self.score += 1

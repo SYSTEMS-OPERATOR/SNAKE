@@ -29,7 +29,9 @@ def main(shape: str = "cube") -> None:
             snake.grow()
             fruit.spawn(snake.body)
             fruit.eat()
-        print(f"Snake: {snake.body} Fruit: {fruit.cell}")
+        print(
+            f"Snake: {snake.body} Fruit: {fruit.cell} Score: {fruit.score}"
+        )
 
     loop = GameLoop(update)
     loop.start()
