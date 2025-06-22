@@ -14,6 +14,14 @@ export class GameLoop extends EventTarget {
     super();
   }
 
+  on(type: string, listener: EventListenerOrEventListenerObject) {
+    this.addEventListener(type, listener);
+  }
+
+  emit(type: string) {
+    this.dispatchEvent(new Event(type));
+  }
+
   start() {
     this.lastTime = performance.now();
     this.state = GameState.RUNNING;
