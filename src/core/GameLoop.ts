@@ -1,19 +1,41 @@
-export class GameLoop {
-  private lastTime = 0;
-  private update: (dt: number) => void;
+export enum GameState {
+  PAUSED,
+  RUNNING,
+  GAME_OVER,
+}
 
-  constructor(update: (dt: number) => void) {
-    this.update = update;
+export class GameLoop extends EventTarget {
+  static TICK = 150; // ms per move
+  private accumulator = 0;
+  private lastTime = 0;
+  state: GameState = GameState.PAUSED;
+
+  constructor(private update: (dt: number) => void) {
+    super();
   }
 
   start() {
+    this.lastTime = performance.now();
+    this.state = GameState.RUNNING;
     requestAnimationFrame(this.tick);
   }
 
+  togglePause() {
+    this.state =
+      this.state === GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING;
+  }
+
   private tick = (time: number) => {
-    const dt = (time - this.lastTime) / 1000;
+    const delta = time - this.lastTime;
     this.lastTime = time;
-    this.update(dt);
+    if (this.state === GameState.RUNNING) {
+      this.accumulator += delta;
+      while (this.accumulator >= GameLoop.TICK) {
+        this.update(GameLoop.TICK / 1000);
+        this.emit('tick');
+        this.accumulator -= GameLoop.TICK;
+      }
+    }
     requestAnimationFrame(this.tick);
   };
 }
