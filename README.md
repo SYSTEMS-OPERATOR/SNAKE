@@ -7,7 +7,9 @@ with Vite for quick WebGL previews.
 
 ## Getting Started
 
-Instructions for installing dependencies and running the development server will go here.
+Clone the repository and install dependencies with `npm install`.
+Run `npm run dev` to start the development server and open `localhost:5173` in your browser.
+Execute `npm test` to run the Vitest suite.
 
 ## How to Play
 
