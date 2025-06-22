@@ -1,0 +1,27 @@
+{
+  "name": "snake-on-surfaces",
+  "version": "0.2.0",
+  "description": "Snake on Surfaces",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "lint": "eslint -c .eslintrc.cjs \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "three": "^0.177.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.177.0",
+    "@typescript-eslint/eslint-plugin": "^8.34.1",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
+}
