@@ -13,6 +13,12 @@
 - Hitting your own body results in a game over.
 - Crossing an edge wraps the snake to the adjacent cube face.
 
+## Sphere Surface
+
+- When using `SphereAdapter`, the grid wraps seamlessly in both directions.
+- All cells use a single face index `0`.
+- The snake can travel endlessly around the sphere with no edges.
+
 ## Fruit
 
 - Fruit spawns in any free cell.

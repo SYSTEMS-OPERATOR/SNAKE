@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { Snake } from '../core/Snake';
 import type { Fruit } from '../core/Fruit';
-import { CubeAdapter } from '../shapes/CubeAdapter';
+import type { IShapeAdapter } from '../shapes/IShapeAdapter';
 
 export class GameRenderer {
   scene: THREE.Scene;
@@ -16,7 +16,7 @@ export class GameRenderer {
   constructor(
     private snake: Snake,
     private fruit: Fruit,
-    private adapter: CubeAdapter,
+    private adapter: IShapeAdapter,
     withControls = false
   ) {
     this.scene = new THREE.Scene();

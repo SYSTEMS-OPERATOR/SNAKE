@@ -2,11 +2,13 @@ import { Grid } from './core/Grid';
 import { Snake } from './core/Snake';
 import { GameLoop } from './core/GameLoop';
 import { CubeAdapter } from './shapes/CubeAdapter';
+import { SphereAdapter } from './shapes/SphereAdapter';
 import { GameRenderer } from './render/GameRenderer';
 import { Fruit } from './core/Fruit';
 import { Input } from './core/Input';
 
-const adapter = new CubeAdapter(5);
+const shape = new URLSearchParams(window.location.search).get('shape');
+const adapter = shape === 'sphere' ? new SphereAdapter(5) : new CubeAdapter(5);
 const grid = new Grid(5, adapter);
 const snake = new Snake({ face: 0, u: 2, v: 2 });
 const fruit = new Fruit(grid);
