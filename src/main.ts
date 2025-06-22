@@ -34,3 +34,4 @@ new Input(snake, () => loop.togglePause());
 const renderer = new GameRenderer(snake, fruit, adapter, true);
 loop.on('tick', () => renderer.update());
 loop.start();
+

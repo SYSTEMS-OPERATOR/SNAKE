@@ -47,4 +47,5 @@ export class Grid {
     }
     return { face, u, v };
   }
+
 }

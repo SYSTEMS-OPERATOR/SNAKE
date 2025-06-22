@@ -10,6 +10,7 @@ export class Snake {
     this.body = [start];
   }
 
+
   enqueueDirection(dir: Direction) {
     this.nextDirections.push(dir);
   }
@@ -21,6 +22,7 @@ export class Snake {
         this.direction = next;
       }
     }
+
     this.body.unshift(nextHead);
     if (!this.growFlag) {
       this.body.pop();
