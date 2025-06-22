@@ -2,6 +2,7 @@
 from python.core.grid import Grid
 from python.core.snake import Snake
 from python.core.fruit import Fruit
+from python.core.score import Score
 from python.core.game_loop import GameLoop, GameState
 from python.shapes.cube_adapter import CubeAdapter
 from python.shapes.sphere_adapter import SphereAdapter
@@ -12,8 +13,18 @@ def main(shape: str = "cube") -> None:
     adapter = SphereAdapter(5) if shape == "sphere" else CubeAdapter(5)
     grid = Grid(5, adapter)
     snake = Snake([Cell(0, 2, 2)])
-    fruit = Fruit(grid)
+    score = Score()
+    fruit = Fruit(grid, score)
     fruit.spawn(snake.body)
+
+    score = 0
+
+    def on_fruit_eaten() -> None:
+        nonlocal score
+        score += 1
+        print(f"Score: {score}")
+
+    fruit.on_eaten(on_fruit_eaten)
 
     def update(_dt: float) -> None:
         next_cell = grid.get_neighbor(snake.body[0], snake.direction)
@@ -29,9 +40,8 @@ def main(shape: str = "cube") -> None:
             snake.grow()
             fruit.spawn(snake.body)
             fruit.eat()
-        print(
-            f"Snake: {snake.body} Fruit: {fruit.cell} Score: {fruit.score}"
-        )
+        print(f"Snake: {snake.body} Fruit: {fruit.cell} Score: {score.value}")
+
 
     loop = GameLoop(update)
     loop.start()

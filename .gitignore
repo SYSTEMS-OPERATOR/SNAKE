@@ -19,4 +19,6 @@ Thumbs.db
 
 # Build output
 /dist
+__pycache__/
+python/**/__pycache__/
 
