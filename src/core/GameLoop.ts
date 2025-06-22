@@ -25,6 +25,14 @@ export class GameLoop extends EventTarget {
       this.state === GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING;
   }
 
+  on(type: string, listener: EventListenerOrEventListenerObject) {
+    this.addEventListener(type, listener);
+  }
+
+  emit(type: string) {
+    this.dispatchEvent(new Event(type));
+  }
+
   private tick = (time: number) => {
     const delta = time - this.lastTime;
     this.lastTime = time;
