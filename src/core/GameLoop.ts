@@ -4,6 +4,8 @@ export enum GameState {
   GAME_OVER,
 }
 
+export type GameLoopEventType = 'tick';
+
 export class GameLoop extends EventTarget {
   static TICK = 150; // ms per move
   private accumulator = 0;
@@ -14,11 +16,11 @@ export class GameLoop extends EventTarget {
     super();
   }
 
-  on(type: string, listener: EventListenerOrEventListenerObject) {
+  on(type: GameLoopEventType, listener: EventListenerOrEventListenerObject) {
     this.addEventListener(type, listener);
   }
 
-  emit(type: string) {
+  emit(type: GameLoopEventType) {
     this.dispatchEvent(new Event(type));
   }
 
@@ -33,14 +35,6 @@ export class GameLoop extends EventTarget {
       this.state === GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING;
   }
 
-  on(type: string, listener: EventListenerOrEventListenerObject) {
-    this.addEventListener(type, listener);
-  }
-
-  emit(type: string) {
-    this.dispatchEvent(new Event(type));
-  }
-
   private tick = (time: number) => {
     const delta = time - this.lastTime;
     this.lastTime = time;
@@ -48,7 +42,7 @@ export class GameLoop extends EventTarget {
       this.accumulator += delta;
       while (this.accumulator >= GameLoop.TICK) {
         this.update(GameLoop.TICK / 1000);
-        this.dispatchEvent(new Event('tick'));
+        this.emit('tick');
         this.accumulator -= GameLoop.TICK;
       }
     }
