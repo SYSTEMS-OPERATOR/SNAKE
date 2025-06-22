@@ -3,6 +3,7 @@ from typing import Callable, List
 
 from ..shapes.ishape_adapter import Cell
 from .grid import Grid
+from .score import Score
 
 
 @dataclass
@@ -10,9 +11,12 @@ class Fruit:
     grid: Grid
     cell: Cell
     _listeners: List[Callable[[], None]]
+    score: Score
 
-    def __init__(self, grid: Grid) -> None:
+
+    def __init__(self, grid: Grid, score: Score) -> None:
         self.grid = grid
+        self.score = score
         self.cell = Cell(0, 0, 0)
         self._listeners = []
 
@@ -26,3 +30,7 @@ class Fruit:
     def eat(self) -> None:
         for cb in list(self._listeners):
             cb()
+
+        """Increment score when the fruit is consumed."""
+        self.score.increment()
+
