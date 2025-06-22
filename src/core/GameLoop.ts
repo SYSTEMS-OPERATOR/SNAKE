@@ -32,7 +32,7 @@ export class GameLoop extends EventTarget {
       this.accumulator += delta;
       while (this.accumulator >= GameLoop.TICK) {
         this.update(GameLoop.TICK / 1000);
-        this.emit('tick');
+        this.dispatchEvent(new Event('tick'));
         this.accumulator -= GameLoop.TICK;
       }
     }
