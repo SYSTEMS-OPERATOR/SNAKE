@@ -13,12 +13,12 @@ class Fruit:
     _listeners: List[Callable[[], None]]
     score: Score
 
-
     def __init__(self, grid: Grid, score: Score) -> None:
         self.grid = grid
-        self.score = score
         self.cell = Cell(0, 0, 0)
+        self.score = 0
         self._listeners = []
+
 
     def spawn(self, snake_body: list[Cell]) -> None:
         self.cell = self.grid.random_cell(snake_body)
@@ -28,6 +28,7 @@ class Fruit:
         self._listeners.append(callback)
 
     def eat(self) -> None:
+        self.score += 1
         for cb in list(self._listeners):
             cb()
 

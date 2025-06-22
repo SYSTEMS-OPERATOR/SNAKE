@@ -42,6 +42,7 @@ def main(shape: str = "cube") -> None:
             fruit.eat()
         print(f"Snake: {snake.body} Fruit: {fruit.cell} Score: {score.value}")
 
+
     loop = GameLoop(update)
     loop.start()
 
