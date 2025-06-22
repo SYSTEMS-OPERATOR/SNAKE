@@ -4,6 +4,7 @@ from typing import List
 from ..shapes.ishape_adapter import Cell
 from .grid import direction_type
 
+
 @dataclass
 class Snake:
     body: List[Cell]
@@ -37,9 +38,19 @@ class Snake:
         self.grow_flag = True
 
     def hits_self(self, cell: Cell) -> bool:
-        return any(c.face == cell.face and c.u == cell.u and c.v == cell.v for c in self.body)
+        return any(
+            c.face == cell.face
+            and c.u == cell.u
+            and c.v == cell.v
+            for c in self.body
+        )
 
     def out_of_bounds(self, cell: Cell, grid_size: int) -> bool:
         return (
-            cell.u < 0 or cell.u >= grid_size or cell.v < 0 or cell.v >= grid_size or cell.face < 0 or cell.face > 5
+            cell.u < 0
+            or cell.u >= grid_size
+            or cell.v < 0
+            or cell.v >= grid_size
+            or cell.face < 0
+            or cell.face > 5
         )

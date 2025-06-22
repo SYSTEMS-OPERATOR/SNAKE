@@ -2,6 +2,7 @@ from typing import Tuple
 
 from .ishape_adapter import Cell, IShapeAdapter
 
+
 class CubeAdapter(IShapeAdapter):
     def __init__(self, size: int = 10) -> None:
         self.size = size
@@ -89,4 +90,8 @@ class CubeAdapter(IShapeAdapter):
                 return Cell(3, last - v, last)
             if u > last and direction == 'right':
                 return Cell(1, last - v, last)
-        return Cell(face, (u + self.size) % self.size, (v + self.size) % self.size)
+        return Cell(
+            face,
+            (u + self.size) % self.size,
+            (v + self.size) % self.size,
+        )

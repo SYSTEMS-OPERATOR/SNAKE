@@ -5,7 +5,9 @@ from typing import List
 
 from ..shapes.ishape_adapter import Cell, IShapeAdapter
 
+
 direction_type = str  # 'up' | 'down' | 'left' | 'right'
+
 
 @dataclass
 class Grid:
@@ -17,7 +19,10 @@ class Grid:
         for face in range(self.adapter.get_face_count()):
             for u in range(self.size):
                 for v in range(self.size):
-                    if not any(c.face == face and c.u == u and c.v == v for c in excluded):
+                    if not any(
+                        c.face == face and c.u == u and c.v == v
+                        for c in excluded
+                    ):
                         cells.append(Cell(face, u, v))
         from random import choice
         return choice(cells)

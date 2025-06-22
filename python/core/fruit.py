@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from ..shapes.ishape_adapter import Cell
 from .grid import Grid
 
+
 @dataclass
 class Fruit:
     grid: Grid
