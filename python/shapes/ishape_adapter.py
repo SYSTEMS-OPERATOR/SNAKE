@@ -2,11 +2,13 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Tuple
 
+
 @dataclass
 class Cell:
     face: int
     u: int
     v: int
+
 
 class IShapeAdapter(ABC):
     """Interface for projecting grid coordinates to 3D space."""

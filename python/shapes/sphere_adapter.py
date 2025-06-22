@@ -3,6 +3,7 @@ from typing import Tuple
 
 from .ishape_adapter import Cell, IShapeAdapter
 
+
 class SphereAdapter(IShapeAdapter):
     """Equirectangular projection for a sphere."""
 
