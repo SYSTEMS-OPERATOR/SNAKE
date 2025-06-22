@@ -15,6 +15,15 @@ def main(shape: str = "cube") -> None:
     fruit = Fruit(grid)
     fruit.spawn(snake.body)
 
+    score = 0
+
+    def on_fruit_eaten() -> None:
+        nonlocal score
+        score += 1
+        print(f"Score: {score}")
+
+    fruit.on_eaten(on_fruit_eaten)
+
     def update(_dt: float) -> None:
         next_cell = grid.get_neighbor(snake.body[0], snake.direction)
         if snake.hits_self(next_cell):
