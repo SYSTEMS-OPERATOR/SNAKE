@@ -4,7 +4,8 @@ import type { Direction } from './Grid';
 export class Input {
   constructor(
     private snake: Snake,
-    private onToggle: () => void
+    private onToggle: () => void,
+    private onReset: () => void
   ) {
     window.addEventListener('keydown', this.handleKey);
   }
@@ -23,6 +24,9 @@ export class Input {
 
     if (e.key === ' ') {
       this.onToggle();
+    }
+    if (e.key === 'r') {
+      this.onReset();
     }
     const dir = map[e.key];
     if (dir) {

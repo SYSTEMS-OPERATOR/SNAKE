@@ -14,8 +14,9 @@ Execute `npm test` to run the Vitest suite.
 ## How to Play
 
 Use the arrow keys or WASD to steer the snake. Press the spacebar to pause or resume.
-Eat the red fruit to grow longer and earn points. The current score is printed
-in the console when using the Python CLI. Colliding with your own body ends the
+Press **R** to reset the game after a game over.
+Eat the red fruit to grow longer and earn points. The current score is shown in the
+top-left corner when running the web version. Colliding with your own body ends the
 game.
 
 ## Development
