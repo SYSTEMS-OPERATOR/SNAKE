@@ -38,5 +38,9 @@ const loop = new GameLoop(() => {
 new Input(snake, () => loop.togglePause());
 const renderer = new GameRenderer(snake, fruit, adapter, true);
 loop.addEventListener('tick', () => renderer.update());
-loop.start();
+try {
+  loop.start();
+} catch (err) {
+  console.error('Game error:', err);
+}
 

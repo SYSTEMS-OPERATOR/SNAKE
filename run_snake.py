@@ -51,4 +51,7 @@ if __name__ == "__main__":
     import sys
 
     shape_arg = sys.argv[1] if len(sys.argv) > 1 else "cube"
-    main(shape_arg)
+    try:
+        main(shape_arg)
+    except Exception as e:  # noqa: BLE001
+        print(f"Error: {e}")
