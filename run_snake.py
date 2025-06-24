@@ -17,12 +17,8 @@ def main(shape: str = "cube") -> None:
     fruit = Fruit(grid, score)
     fruit.spawn(snake.body)
 
-    score = 0
-
     def on_fruit_eaten() -> None:
-        nonlocal score
-        score += 1
-        print(f"Score: {score}")
+        print(f"Score: {score.value}")
 
     fruit.on_eaten(on_fruit_eaten)
 

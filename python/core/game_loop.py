@@ -1,6 +1,6 @@
-import time
 from enum import Enum, auto
 from typing import Callable
+import time
 
 
 class GameState(Enum):
@@ -25,11 +25,11 @@ class GameLoop:
             self.tick()
 
     def toggle_pause(self) -> None:
-        self.state = (
-            GameState.PAUSED
-            if self.state == GameState.RUNNING
-            else GameState.RUNNING
-        )
+        if self.state == GameState.RUNNING:
+            self.state = GameState.PAUSED
+        else:
+            self.state = GameState.RUNNING
+            self.last_time = time.perf_counter()
 
     def tick(self) -> None:
         now = time.perf_counter()
