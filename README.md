@@ -13,6 +13,12 @@ Execute `npm test` to run the Vitest suite.
 You can also try the Python CLI version with `python run_snake.py cube` or `python run_snake.py sphere`.
 After each round it will prompt to play again.
 
+## Building for Production
+
+Run `npm run build` to produce a static build under `dist/`. To preview the
+result locally, execute `npm run preview`. The project targets Node.js 20, so
+ensure a compatible version is installed before running these commands.
+
 ## How to Play
 
 Use the arrow keys or WASD to steer the snake. Press the spacebar to pause or resume.
