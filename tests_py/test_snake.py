@@ -21,7 +21,10 @@ def test_detect_self_collision():
     snake.grow()
     next_cell = grid.get_neighbor(snake.body[0], 'right')
     snake.step(next_cell)
-    next_cell = grid.get_neighbor(snake.body[0], 'left')
+    snake.grow()
+    next_cell = grid.get_neighbor(snake.body[0], 'down')
+    snake.step(next_cell)
+    next_cell = grid.get_neighbor(snake.body[0], 'up')
     assert snake.hits_self(next_cell)
 
 
