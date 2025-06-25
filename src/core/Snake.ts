@@ -15,14 +15,16 @@ export class Snake {
     this.nextDirections.push(dir);
   }
 
-  step(nextHead: Cell) {
+  applyNextDirection() {
     if (this.nextDirections.length > 0) {
       const next = this.nextDirections.shift()!;
       if (!this.isOpposite(next)) {
         this.direction = next;
       }
     }
+  }
 
+  step(nextHead: Cell) {
     this.body.unshift(nextHead);
     if (!this.growFlag) {
       this.body.pop();
