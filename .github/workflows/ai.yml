@@ -1,0 +1,21 @@
+name: AI Integration
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  ai-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pytest
+      - name: Run AI integration tests
+        run: |
+          python -m py_compile $(git ls-files '*.py')
+          python -m pytest -q tests_py/test_game_loop_ai.py
