@@ -21,7 +21,19 @@ game.
 
 ## Development
 
+
 All code lives under `src/`. Unit tests reside in `tests/`.
+
+## Python CLI
+
+For a simple text-based demo, run the Python version:
+
+```bash
+python run_snake.py            # play on a cube
+python run_snake.py sphere     # play on a sphere
+```
+
+Scores print to the console as you eat fruit.
 
 ## License
 
