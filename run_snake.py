@@ -42,12 +42,18 @@ def main(shape: str = "cube") -> None:
     loop = GameLoop(update)
     loop.start()
 
+    print(f"Game Over! Final score: {score.value}")
+
 
 if __name__ == "__main__":
     import sys
 
     shape_arg = sys.argv[1] if len(sys.argv) > 1 else "cube"
-    try:
-        main(shape_arg)
-    except Exception as e:  # noqa: BLE001
-        print(f"Error: {e}")
+    while True:
+        try:
+            main(shape_arg)
+        except Exception as e:  # noqa: BLE001
+            print(f"Error: {e}")
+        again = input("Play again? (y/n): ").strip().lower()
+        if again != "y":
+            break
