@@ -47,12 +47,23 @@ def main(shape: str = "cube") -> None:
 
 
 if __name__ == "__main__":
-    import sys
+    import argparse
 
-    shape_arg = sys.argv[1] if len(sys.argv) > 1 else "cube"
+    parser = argparse.ArgumentParser(
+        description="Run the Snake game on a cube or sphere surface."
+    )
+    parser.add_argument(
+        "shape",
+        nargs="?",
+        choices=["cube", "sphere"],
+        default="cube",
+        help="Surface shape to play on",
+    )
+    args = parser.parse_args()
+
     while True:
         try:
-            main(shape_arg)
+            main(args.shape)
         except KeyboardInterrupt:
             print("Exiting...")
             break
