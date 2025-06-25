@@ -6,6 +6,13 @@
 - The cube is divided into six faces, each with an `NxN` grid.
 - The snake moves one cell every `150ms` no matter the frame rate.
 
+### Timing Table
+
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| Grid size | `N x N` | same on every face |
+| Tick rate | `150ms` | duration of one game step |
+
 ## Movement Rules
 
 - No diagonal moves are permitted.
@@ -37,6 +44,14 @@ Cube edge relationships follow a simple net layout as illustrated below:
 [3][0][1][2]
    [5]
 ```
+
+Edges wrap as follows:
+- **Face 0** → left to face 3, right to face 1, up to face 4, down to face 5.
+- **Face 1** → left to face 0, right to face 2, up to face 4, down to face 5.
+- **Face 2** → left to face 1, right to face 3, up to face 4, down to face 5.
+- **Face 3** → left to face 2, right to face 0, up to face 4, down to face 5.
+- **Face 4** → up to face 2, down to face 0, left/right continue onto faces 3 and 1.
+- **Face 5** → up to face 0, down to face 2, left/right continue onto faces 3 and 1.
 
 ## Grid Definition
 - Grid uses an NxN layout determined by a surface adapter.
