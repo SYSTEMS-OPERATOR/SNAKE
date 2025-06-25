@@ -3,7 +3,9 @@
 ## Overview
 
 An AR/XR take on the arcade classic Snake. This project uses TypeScript and Three.js
-with Vite for quick WebGL previews.
+with Vite for quick WebGL previews. See [docs/MECHANICS.md](docs/MECHANICS.md) for the
+game rules and [docs/GAME_FLOW.md](docs/GAME_FLOW.md) for a flowchart of how the code
+fits together.
 
 ## Getting Started
 
