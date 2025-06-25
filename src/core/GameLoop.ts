@@ -31,8 +31,12 @@ export class GameLoop extends EventTarget {
   }
 
   togglePause() {
-    this.state =
-      this.state === GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING;
+    if (this.state === GameState.RUNNING) {
+      this.state = GameState.PAUSED;
+    } else {
+      this.state = GameState.RUNNING;
+      this.lastTime = performance.now();
+    }
   }
 
   private tick = (time: number) => {
