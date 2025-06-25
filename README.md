@@ -52,7 +52,7 @@ python -m py_compile $(git ls-files '*.py')
 python -m pytest -q
 ```
 
-Both sets of tests run in CI to ensure the project stays stable.
+Both sets of tests run in CI, including a small AI integration test, to ensure the project stays stable.
 
 ## Python CLI
 
