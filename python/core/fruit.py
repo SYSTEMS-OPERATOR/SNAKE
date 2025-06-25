@@ -31,8 +31,8 @@ class Fruit:
 
     def eat(self) -> None:
         self.score += 1
-        for cb in list(self._listeners):
-            cb()
         if self._score_obj is not None:
             self._score_obj.increment()
+        for cb in list(self._listeners):
+            cb()
 
