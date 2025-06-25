@@ -1,16 +1,19 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { GameLoop, GameState } from '../src/core/GameLoop';
 
-// The GameLoop should reset lastTime when resuming from a pause so
-// accumulated time while paused does not trigger extra updates.
+// Access private field via casting
+function getLastTime(loop: GameLoop): number {
+  return (loop as unknown as { lastTime: number }).lastTime;
+}
 
 describe('GameLoop togglePause', () => {
-  it('resets lastTime when unpausing', () => {
+  it('sets lastTime when switching to RUNNING', () => {
     const loop = new GameLoop(() => {});
-    // loop starts paused by default
     expect(loop.state).toBe(GameState.PAUSED);
+    const spy = vi.spyOn(performance, 'now').mockReturnValue(123);
     loop.togglePause();
     expect(loop.state).toBe(GameState.RUNNING);
-    expect(loop['lastTime']).toBeGreaterThan(0);
+    expect(getLastTime(loop)).toBe(123);
+    spy.mockRestore();
   });
 });
