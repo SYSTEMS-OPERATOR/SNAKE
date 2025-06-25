@@ -26,6 +26,23 @@ game.
 
 All code lives under `src/`. Unit tests reside in `tests/`.
 
+## Testing
+
+Run the JavaScript suite with:
+
+```bash
+npm test
+```
+
+For the Python modules:
+
+```bash
+python -m py_compile $(git ls-files '*.py')
+python -m pytest -q
+```
+
+Both sets of tests run in CI to ensure the project stays stable.
+
 ## Python CLI
 
 For a simple text-based demo, run the Python version:
