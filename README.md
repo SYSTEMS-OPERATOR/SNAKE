@@ -10,6 +10,8 @@ with Vite for quick WebGL previews.
 Clone the repository and install dependencies with `npm install`.
 Run `npm run dev` to start the development server and open `localhost:5173` in your browser.
 Execute `npm test` to run the Vitest suite.
+You can also try the Python CLI version with `python run_snake.py cube` or `python run_snake.py sphere`.
+After each round it will prompt to play again.
 
 ## How to Play
 
