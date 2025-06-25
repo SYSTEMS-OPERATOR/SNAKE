@@ -23,4 +23,13 @@ describe('Snake mechanics', () => {
     next = grid.getNeighbor(snake.body[0], 'left');
     expect(snake.hitsSelf(next)).toBe(true);
   });
+
+  it('applies queued direction before moving', () => {
+    const snake = new Snake({ face: 0, u: 1, v: 1 });
+    snake.enqueueDirection('down');
+    snake.applyNextDirection();
+    const next = grid.getNeighbor(snake.body[0], snake.direction);
+    snake.step(next);
+    expect(snake.body[0]).toEqual({ face: 0, u: 1, v: 2 });
+  });
 });

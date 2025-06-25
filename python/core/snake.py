@@ -23,11 +23,13 @@ class Snake:
             or (self.direction == 'right' and direction == 'left')
         )
 
-    def step(self, next_head: Cell) -> None:
+    def apply_next_direction(self) -> None:
         if self.next_directions:
             next_dir = self.next_directions.pop(0)
             if not self.is_opposite(next_dir):
                 self.direction = next_dir
+
+    def step(self, next_head: Cell) -> None:
         self.body.insert(0, next_head)
         if not self.grow_flag:
             self.body.pop()
