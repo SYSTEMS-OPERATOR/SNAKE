@@ -15,13 +15,14 @@ def test_snake_grows_after_eating():
 
 
 def test_detect_self_collision():
-    adapter = CubeAdapter(3)
-    grid = Grid(3, adapter)
-    snake = Snake([Cell(0, 1, 1)])
-    snake.grow()
-    next_cell = grid.get_neighbor(snake.body[0], 'right')
-    snake.step(next_cell)
-    next_cell = grid.get_neighbor(snake.body[0], 'left')
+    adapter = CubeAdapter(4)
+    grid = Grid(4, adapter)
+    snake = Snake([
+        Cell(0, 1, 1),
+        Cell(0, 1, 2),
+        Cell(0, 1, 3),
+    ])
+    next_cell = grid.get_neighbor(snake.body[0], 'down')
     assert snake.hits_self(next_cell)
 
 
@@ -34,3 +35,13 @@ def test_direction_applied_before_move():
     next_cell = grid.get_neighbor(snake.body[0], snake.direction)
     snake.step(next_cell)
     assert snake.body[0] == Cell(0, 1, 2)
+
+
+def test_moving_into_tail_not_self_collision():
+    adapter = CubeAdapter(3)
+    grid = Grid(3, adapter)
+    snake = Snake([Cell(0, 1, 1), Cell(0, 0, 1)])
+    snake.direction = 'left'
+    next_cell = grid.get_neighbor(snake.body[0], snake.direction)
+    assert next_cell == snake.body[-1]
+    assert not snake.hits_self(next_cell)

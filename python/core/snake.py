@@ -40,11 +40,12 @@ class Snake:
         self.grow_flag = True
 
     def hits_self(self, cell: Cell) -> bool:
+        body = self.body if self.grow_flag else self.body[:-1]
         return any(
             c.face == cell.face
             and c.u == cell.u
             and c.v == cell.v
-            for c in self.body
+            for c in body
         )
 
     def out_of_bounds(self, cell: Cell, grid_size: int) -> bool:
