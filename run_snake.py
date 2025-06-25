@@ -53,6 +53,9 @@ if __name__ == "__main__":
     while True:
         try:
             main(shape_arg)
+        except KeyboardInterrupt:
+            print("Exiting...")
+            break
         except Exception as e:  # noqa: BLE001
             print(f"Error: {e}")
         again = input("Play again? (y/n): ").strip().lower()
