@@ -1,36 +1,18 @@
 # Game Mechanics
 
+This document outlines the fundamental rules and timing used in the Snake on Surfaces prototype.
 
 ## Grid and Timing
 
-- The cube is divided into six faces, each with an `NxN` grid.
-- The snake moves one cell every `150ms` no matter the frame rate.
+| Parameter       | Value  | Description                                  |
+|-----------------|-------:|----------------------------------------------|
+| Grid size       | `N x N`| Size is provided by the active shape adapter |
+| Tick interval   | 150 ms | Time between snake steps                     |
+| Starting length | 1      | Snake grows when fruit is eaten              |
 
-## Movement Rules
+## Cube Edge Relationships
 
-- No diagonal moves are permitted.
-- Direction changes are queued so rapid key presses are handled smoothly.
-- Hitting your own body results in a game over.
-- Crossing an edge wraps the snake to the adjacent cube face.
-
-## Sphere Surface
-
-- When using `SphereAdapter`, the grid wraps seamlessly in both directions.
-- All cells use a single face index `0`.
-- The snake can travel endlessly around the sphere with no edges.
-
-## Fruit
-
-- Fruit spawns in any free cell.
-- Eating fruit grows the snake by one segment and increments the score.
-
-## States
-
-- **PAUSED** – game loop halted.
-- **RUNNING** – snake advances each tick.
-- **GAME_OVER** – no further updates until reset.
-
-Cube edge relationships follow a simple net layout as illustrated below:
+The cube adapter arranges faces according to the following net. Moving off one face wraps the snake onto the adjacent face as shown.
 
 ```
    [4]
@@ -38,21 +20,25 @@ Cube edge relationships follow a simple net layout as illustrated below:
    [5]
 ```
 
-## Grid Definition
-- Grid uses an NxN layout determined by a surface adapter.
-- Movement step is based on constant speed.
-
 ## Movement Rules
+
 - No diagonal movement.
-- Buffered queue of next directions to handle quick key taps.
-- Self-collision results in game over.
+- Next directions are stored in a queue so rapid key presses are respected.
+- Colliding with your own body ends the game.
+- Edge crossing uses the adapter's `wrap` function to continue on the correct face.
 
 ## Fruit
-- Randomly spawns in any unoccupied cell.
-- When eaten, snake length increases and score increments.
+
+- Fruit spawns in a random unoccupied cell.
+- Consuming fruit increases the snake length by one and increments the score.
+- Callbacks registered via `on_eaten` fire when fruit is consumed.
 
 ## Game States
-- `PAUSED`
-- `RUNNING`
-- `GAME_OVER`
 
+- **PAUSED** – game loop halted.
+- **RUNNING** – snake advances each tick.
+- **GAME_OVER** – no further updates until reset.
+
+## Sphere Surface
+
+When the `SphereAdapter` is active, the grid wraps seamlessly in both directions and uses a single face index (`0`). The snake can travel endlessly around the sphere with no edges.
