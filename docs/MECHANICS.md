@@ -1,17 +1,15 @@
 # Game Mechanics
 
+This document outlines the fundamental rules and timing used in the Snake on Surfaces prototype.
 
 ## Grid and Timing
 
-- The cube is divided into six faces, each with an `NxN` grid.
-- The snake moves one cell every `150ms` no matter the frame rate.
 
-### Timing Table
 
-| Parameter | Value | Notes |
+| Parameter | Value | Description |
 |-----------|-------|-------|
-| Grid size | `N x N` | same on every face |
-| Tick rate | `150ms` | duration of one game step |
+| Grid size | `N x N` | Size is provided by the active shape adapter. |
+| Tick rate | `150ms` | Duration of one game step. |
 
 ## Movement Rules
 
@@ -37,7 +35,10 @@
 - **RUNNING** – snake advances each tick.
 - **GAME_OVER** – no further updates until reset.
 
-Cube edge relationships follow a simple net layout as illustrated below:
+## Cube Edge Relationships
+
+
+The cube adapter arranges faces according to the following net. Moving off one face wraps the snake onto the adjacent face as shown.
 
 ```
    [4]
@@ -58,16 +59,24 @@ Edges wrap as follows:
 - Movement step is based on constant speed.
 
 ## Movement Rules
+
 - No diagonal movement.
-- Buffered queue of next directions to handle quick key taps.
-- Self-collision results in game over.
+- Next directions are stored in a queue so rapid key presses are respected.
+- Colliding with your own body ends the game.
+- Edge crossing uses the adapter's `wrap` function to continue on the correct face.
 
 ## Fruit
-- Randomly spawns in any unoccupied cell.
-- When eaten, snake length increases and score increments.
+
+- Fruit spawns in a random unoccupied cell.
+- Consuming fruit increases the snake length by one and increments the score.
+- Callbacks registered via `on_eaten` fire when fruit is consumed.
 
 ## Game States
-- `PAUSED`
-- `RUNNING`
-- `GAME_OVER`
 
+- **PAUSED** – game loop halted.
+- **RUNNING** – snake advances each tick.
+- **GAME_OVER** – no further updates until reset.
+
+## Sphere Surface
+
+When the `SphereAdapter` is active, the grid wraps seamlessly in both directions and uses a single face index (`0`). The snake can travel endlessly around the sphere with no edges.
