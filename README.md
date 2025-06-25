@@ -31,6 +31,11 @@ game.
 
 
 All code lives under `src/`. Unit tests reside in `tests/`.
+Run the Python tests with:
+```bash
+python -m py_compile $(git ls-files '*.py')
+python -m pytest -q
+```
 
 ## Testing
 
