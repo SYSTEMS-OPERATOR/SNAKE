@@ -65,6 +65,13 @@ python run_snake.py sphere     # play on a sphere
 
 Scores print to the console as you eat fruit.
 
+### Simple AI Agent
+
+An experimental `SimpleAgent` is provided under `python/ai/`. It chooses random
+non-opposite directions so you can automate short runs. The AI is exercised in
+`tests_py/test_ai_stability.py` and runs in CI to ensure future AI integrations
+remain stable.
+
 ## License
 
 This project is licensed under the MIT License.

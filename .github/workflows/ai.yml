@@ -1,4 +1,5 @@
-name: AI Integration
+name: AI Integration Test
+
 
 on:
   push:
@@ -19,3 +20,7 @@ jobs:
         run: |
           python -m py_compile $(git ls-files '*.py')
           python -m pytest -q tests_py/test_game_loop_ai.py
+      - name: Run AI autoplayer test
+        run: |
+          python -m pytest -q tests_py/test_autoplayer.py
+
