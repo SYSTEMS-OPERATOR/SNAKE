@@ -50,3 +50,19 @@ def test_score_increments_on_eat():
     fruit.eat()
     assert score.value == 1
 
+
+def test_eat_callback_sees_updated_score():
+    adapter = CubeAdapter(3)
+    grid = Grid(3, adapter)
+    score = Score()
+    fruit = Fruit(grid, score)
+    fruit.spawn([])
+    seen: list[int] = []
+
+    def on_eat() -> None:
+        seen.append(score.value)
+
+    fruit.on_eaten(on_eat)
+    fruit.eat()
+    assert seen == [1]
+
