@@ -23,6 +23,7 @@ def main(shape: str = "cube") -> None:
     fruit.on_eaten(on_fruit_eaten)
 
     def update(_dt: float) -> None:
+        snake.apply_next_direction()
         next_cell = grid.get_neighbor(snake.body[0], snake.direction)
         if snake.hits_self(next_cell):
             loop.state = GameState.GAME_OVER

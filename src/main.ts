@@ -32,6 +32,7 @@ function resetGame() {
 }
 
 const loop = new GameLoop(() => {
+  snake.applyNextDirection();
   const next = grid.getNeighbor(snake.body[0], snake.direction);
   if (snake.hitsSelf(next)) {
     loop.state = 2; // GAME_OVER
