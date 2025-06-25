@@ -38,7 +38,8 @@ export class Snake {
   }
 
   hitsSelf(cell: Cell) {
-    return this.body.some(
+    const body = this.growFlag ? this.body : this.body.slice(0, -1);
+    return body.some(
       (c) => c.face === cell.face && c.u === cell.u && c.v === cell.v
     );
   }

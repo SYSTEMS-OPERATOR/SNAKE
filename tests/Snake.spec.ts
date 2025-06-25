@@ -20,7 +20,10 @@ describe('Snake mechanics', () => {
     snake.grow();
     let next = grid.getNeighbor(snake.body[0], 'right');
     snake.step(next); // grow to length 2
-    next = grid.getNeighbor(snake.body[0], 'left');
+    snake.grow();
+    next = grid.getNeighbor(snake.body[0], 'down');
+    snake.step(next);
+    next = grid.getNeighbor(snake.body[0], 'up');
     expect(snake.hitsSelf(next)).toBe(true);
   });
 
