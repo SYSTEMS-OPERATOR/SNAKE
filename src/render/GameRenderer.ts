@@ -56,7 +56,11 @@ export class GameRenderer {
     this.scene.add(this.fruitMesh);
   }
 
-  private ensureSegments() {
+  /**
+   * Ensure the number of rendered snake segments matches the game state.
+   * Extra meshes are removed and disposed when the snake shrinks.
+   */
+  private syncSegments() {
     const geom = new THREE.BoxGeometry(1, 1, 1);
     const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     while (this.snakeMeshes.length < this.snake.body.length) {
@@ -64,15 +68,27 @@ export class GameRenderer {
       this.scene.add(mesh);
       this.snakeMeshes.push(mesh);
     }
+    while (this.snakeMeshes.length > this.snake.body.length) {
+      const mesh = this.snakeMeshes.pop()!;
+      this.scene.remove(mesh);
+      mesh.geometry.dispose();
+      (mesh.material as THREE.Material).dispose();
+    }
   }
 
   update() {
-    this.ensureSegments();
+    this.syncSegments();
     for (let i = 0; i < this.snake.body.length; i++) {
       const pos = this.adapter.toWorld(this.snake.body[i]);
       this.snakeMeshes[i].position.copy(pos);
     }
     this.fruitMesh.position.copy(this.adapter.toWorld(this.fruit.cell));
     this.renderer.render(this.scene, this.camera);
+  }
+
+  /** Reset renderer state after the game restarts. */
+  reset() {
+    this.syncSegments();
+    this.update();
   }
 }

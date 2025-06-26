@@ -29,6 +29,7 @@ function resetGame() {
   fruit.spawn(snake.body);
   scoreEl.textContent = 'Score: 0';
   loop.state = 1; // RUNNING
+  renderer.reset();
 }
 
 const loop = new GameLoop(() => {
@@ -51,9 +52,9 @@ const loop = new GameLoop(() => {
   }
 });
 
-new Input(snake, () => loop.togglePause(), resetGame);
 const renderer = new GameRenderer(snake, fruit, adapter, true);
 loop.addEventListener('tick', () => renderer.update());
+new Input(snake, () => loop.togglePause(), resetGame);
 try {
   loop.start();
 } catch (err) {
