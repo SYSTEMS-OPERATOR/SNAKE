@@ -3,6 +3,7 @@ import { Snake } from './core/Snake';
 import { GameLoop, GameState } from './core/GameLoop';
 import { CubeAdapter } from './shapes/CubeAdapter';
 import { SphereAdapter } from './shapes/SphereAdapter';
+import { CylinderAdapter } from './shapes/CylinderAdapter';
 import { GameRenderer } from './render/GameRenderer';
 import { Fruit } from './core/Fruit';
 import { Score } from './core/Score';
@@ -23,7 +24,7 @@ let snake: Snake;
 let fruit: Fruit;
 let score: Score;
 let input: Input;
-let adapter: CubeAdapter | SphereAdapter;
+let adapter: CubeAdapter | SphereAdapter | CylinderAdapter;
 let grid: Grid;
 
 function showInstructions() {
@@ -42,7 +43,12 @@ function startGame() {
   const shape = shapeSelect.value;
   GameLoop.TICK = speed;
 
-  adapter = shape === 'sphere' ? new SphereAdapter(size) : new CubeAdapter(size);
+  adapter =
+    shape === 'sphere'
+      ? new SphereAdapter(size)
+      : shape === 'cylinder'
+        ? new CylinderAdapter(size)
+        : new CubeAdapter(size);
   grid = new Grid(size, adapter);
   snake = new Snake({ face: 0, u: Math.floor(size / 2), v: Math.floor(size / 2) });
   score = new Score();
