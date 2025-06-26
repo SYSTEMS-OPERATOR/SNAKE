@@ -79,6 +79,7 @@ function startGame() {
   loop.addEventListener('tick', () => renderer.update());
 
   scoreEl.textContent = 'Score: 0';
+  showInstructions();
   renderer.reset();
   loop.state = 1; // RUNNING
 }
