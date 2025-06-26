@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import type { Cell, Direction } from '../core/Grid';
 import type { IShapeAdapter } from './IShapeAdapter';
 
+/**
+ * Projects grid coordinates onto the six faces of a cube. Wrapping logic maps
+ * movements across an edge to the adjacent face, preserving direction.
+ */
 export class CubeAdapter implements IShapeAdapter {
   /** Map grid coordinates onto the six faces of a cube. */
   constructor(private size = 10) {}
@@ -43,7 +47,10 @@ export class CubeAdapter implements IShapeAdapter {
     }
   }
 
-  /** Wrap a cell crossing one face to its neighbor face. */
+  /**
+   * Wrap a cell when moving off one face to the neighbor face. The direction
+   * determines which face transition to perform.
+   */
   wrap(cell: Cell, dir: Direction): Cell {
     const { face } = cell;
     let { u, v } = cell;

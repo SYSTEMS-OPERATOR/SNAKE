@@ -41,7 +41,7 @@ class CubeAdapter(IShapeAdapter):
         return (0.0, 0.0, 0.0)
 
     def wrap(self, cell: Cell, direction: str) -> Cell:
-        """Wrap a cell that moves beyond one face to the opposite face."""
+        """Wrap a cell across cube faces when moving off an edge."""
         face = cell.face
         u = cell.u
         v = cell.v

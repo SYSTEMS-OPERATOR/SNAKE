@@ -20,7 +20,7 @@ export class SphereAdapter implements IShapeAdapter {
     return 1;
   }
 
-  /** Convert a grid cell to a point on the sphere. */
+  /** Convert a grid cell to a position on the sphere surface. */
   toWorld(cell: Cell): THREE.Vector3 {
     const phi = (cell.u + 0.5) * (2 * Math.PI / this.size);
     const theta = (cell.v + 0.5) * (Math.PI / this.size);
@@ -30,7 +30,10 @@ export class SphereAdapter implements IShapeAdapter {
     return new THREE.Vector3(x, y, z);
   }
 
-  // direction is ignored because wrapping on a sphere is uniform
+  /**
+   * Wrap a cell around the sphere. Direction is ignored because all edges
+   * connect uniformly in an equirectangular projection.
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   /** Wrap coordinates when moving across the sphere boundary. */
   wrap(cell: Cell, _dir: Direction): Cell {

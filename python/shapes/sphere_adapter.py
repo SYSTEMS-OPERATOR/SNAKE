@@ -5,7 +5,7 @@ from .ishape_adapter import Cell, IShapeAdapter
 
 
 class SphereAdapter(IShapeAdapter):
-    """Equirectangular projection for mapping cells onto a sphere."""
+    """Adapter using an equirectangular projection for a sphere surface."""
 
     def __init__(self, size: int = 10, radius: float | None = None) -> None:
         self.size = size
@@ -19,7 +19,6 @@ class SphereAdapter(IShapeAdapter):
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
         """Convert a grid cell to a 3D point on the sphere."""
-
         phi = (cell.u + 0.5) * (2 * math.pi / self.size)
         theta = (cell.v + 0.5) * (math.pi / self.size)
         x = self.radius * math.sin(theta) * math.cos(phi)
@@ -28,7 +27,7 @@ class SphereAdapter(IShapeAdapter):
         return (x, y, z)
 
     def wrap(self, cell: Cell, _direction: str) -> Cell:
-        """Wrap coordinates across the sphere's boundaries."""
+        """Wrap coordinates around the sphere uniformly."""
         u = (cell.u + self.size) % self.size
         v = (cell.v + self.size) % self.size
         return Cell(0, u, v)
