@@ -66,6 +66,39 @@ export class GameRenderer {
       this.scene.add(mesh);
       this.snakeMeshes.push(mesh);
     }
+    // Remove extra meshes when the snake shrinks (e.g., after reset)
+    while (this.snakeMeshes.length > this.snake.body.length) {
+      const mesh = this.snakeMeshes.pop();
+      if (mesh) {
+        this.scene.remove(mesh);
+        mesh.geometry.dispose();
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((m) => m.dispose());
+        } else {
+          mesh.material.dispose();
+        }
+      }
+    }
+  }
+
+  /**
+   * Reset the renderer to match the current snake state.
+   * Removes all segment meshes and recreates the initial head.
+   */
+  reset() {
+    for (const mesh of this.snakeMeshes) {
+      this.scene.remove(mesh);
+      mesh.geometry.dispose();
+      if (Array.isArray(mesh.material)) {
+        mesh.material.forEach((m) => m.dispose());
+      } else {
+        mesh.material.dispose();
+      }
+    }
+    this.snakeMeshes = [];
+    this.ensureSegments();
+    // Update fruit position as well
+    this.fruitMesh.position.copy(this.adapter.toWorld(this.fruit.cell));
   }
 
   update() {
