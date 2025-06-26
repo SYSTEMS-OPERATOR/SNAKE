@@ -11,6 +11,7 @@ export class GameLoop extends EventTarget {
   private accumulator = 0;
   private lastTime = 0;
   state: GameState = GameState.PAUSED;
+  private frame = 0;
 
   constructor(private update: (dt: number) => void) {
     super();
@@ -27,7 +28,11 @@ export class GameLoop extends EventTarget {
   start() {
     this.lastTime = performance.now();
     this.state = GameState.RUNNING;
-    requestAnimationFrame(this.tick);
+    this.frame = requestAnimationFrame(this.tick);
+  }
+
+  stop() {
+    cancelAnimationFrame(this.frame);
   }
 
   togglePause() {
@@ -50,6 +55,6 @@ export class GameLoop extends EventTarget {
         this.accumulator -= GameLoop.TICK;
       }
     }
-    requestAnimationFrame(this.tick);
+    this.frame = requestAnimationFrame(this.tick);
   };
 }

@@ -10,6 +10,10 @@ export class Input {
     window.addEventListener('keydown', this.handleKey);
   }
 
+  dispose() {
+    window.removeEventListener('keydown', this.handleKey);
+  }
+
   handleKey = (e: KeyboardEvent) => {
     const map: Record<string, Direction> = {
       ArrowUp: 'up',
