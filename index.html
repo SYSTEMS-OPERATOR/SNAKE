@@ -4,9 +4,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake on Surfaces</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: sans-serif;
+        color: white;
+      }
+      #score,
+      #instructions,
+      #gameover,
+      #menu {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+      #score {
+        top: 10px;
+      }
+      #instructions,
+      #gameover,
+      #menu {
+        top: 40%;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 8px;
+      }
+      #menu {
+        display: none;
+      }
+      #gameover {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <div id="score" style="position: absolute; top: 10px; left: 10px; color: white;">Score: 0</div>
+    <div id="score">Score: 0</div>
+    <div id="instructions">Use Arrow keys/WASD to move. Space to pause. R to reset.</div>
+    <div id="gameover"></div>
+    <div id="menu">
+      <form id="start-form">
+        <div>
+          <label>Shape:
+            <select id="shape-select">
+              <option value="cube">Cube</option>
+              <option value="sphere">Sphere</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>Grid Size: <input type="number" id="grid-input" value="5" min="3" max="10" /></label>
+        </div>
+        <div>
+          <label>Speed (ms per move): <input type="number" id="speed-input" value="150" min="50" /></label>
+        </div>
+        <button type="submit">Start Game</button>
+      </form>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

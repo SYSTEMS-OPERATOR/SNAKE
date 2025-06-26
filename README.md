@@ -7,6 +7,13 @@ with Vite for quick WebGL previews. See [docs/MECHANICS.md](docs/MECHANICS.md) f
 game rules and [docs/GAME_FLOW.md](docs/GAME_FLOW.md) for a flowchart of how the code
 fits together.
 
+### Recent Updates
+
+- Start menu allows selecting **Cube** or **Sphere** surface, grid size and speed.
+- On-screen instructions explain keyboard controls.
+- Game over overlay shows final score with a prompt to restart.
+- Images below show these features in action.
+
 ## Getting Started
 
 Clone the repository and install dependencies with `npm install`.
@@ -28,6 +35,16 @@ Press **R** to reset the game after a game over.
 Eat the red fruit to grow longer and earn points. The current score is shown in the
 top-left corner when running the web version. Colliding with your own body ends the
 game.
+
+When the page first loads you'll see a **start menu** where you can choose the
+surface shape, grid size and snake speed. After clicking Start, a short
+instructions overlay appears and fades. When the snake collides with itself, a
+Game Over message displays your final score and you can press **R** to try
+again.
+
+![Menu](docs/images/menu.svg)
+![Instructions](docs/images/instructions.svg)
+![Game Over](docs/images/gameover.svg)
 
 ## Development
 
@@ -77,3 +94,9 @@ remain stable.
 ## License
 
 This project is licensed under the MIT License.
+
+## Assets and Attribution
+
+The simple SVG images used in this repository (under `docs/images/`) were
+created for demonstration purposes and are released under the CC0 license. You
+are free to reuse or modify them.

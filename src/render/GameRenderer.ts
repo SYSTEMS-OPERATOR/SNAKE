@@ -12,6 +12,7 @@ export class GameRenderer {
   controls?: OrbitControls;
   snakeMeshes: THREE.Mesh[] = [];
   fruitMesh: THREE.Mesh;
+  dom: HTMLElement;
 
   constructor(
     private snake: Snake,
@@ -34,6 +35,7 @@ export class GameRenderer {
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(this.renderer.domElement);
+    this.dom = this.renderer.domElement;
 
     if (withControls) {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -74,5 +76,21 @@ export class GameRenderer {
     }
     this.fruitMesh.position.copy(this.adapter.toWorld(this.fruit.cell));
     this.renderer.render(this.scene, this.camera);
+  }
+
+  dispose() {
+    this.snakeMeshes.forEach((m) => {
+      this.scene.remove(m);
+      m.geometry.dispose();
+      (m.material as THREE.Material).dispose();
+    });
+    this.snakeMeshes = [];
+    this.scene.remove(this.fruitMesh);
+    this.fruitMesh.geometry.dispose();
+    (this.fruitMesh.material as THREE.Material).dispose();
+    this.renderer.dispose();
+    if (this.dom.parentElement) {
+      this.dom.parentElement.removeChild(this.dom);
+    }
   }
 }
