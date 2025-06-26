@@ -81,7 +81,7 @@ function startGame() {
   scoreEl.textContent = 'Score: 0';
   showInstructions();
   renderer.reset();
-  loop.state = 1; // RUNNING
+  loop.start();
 }
 
 function resetGame() {
