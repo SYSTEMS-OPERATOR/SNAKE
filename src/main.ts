@@ -28,6 +28,7 @@ function resetGame() {
   score.value = 0;
   fruit.spawn(snake.body);
   scoreEl.textContent = 'Score: 0';
+  renderer.reset();
   loop.state = 1; // RUNNING
 }
 
