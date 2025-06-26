@@ -121,6 +121,9 @@ export class GameRenderer {
     this.scene.remove(this.fruitMesh);
     this.fruitMesh.geometry.dispose();
     (this.fruitMesh.material as THREE.Material).dispose();
+    if (this.controls) {
+      this.controls.dispose();
+    }
     this.renderer.dispose();
     if (this.dom.parentElement) {
       this.dom.parentElement.removeChild(this.dom);
