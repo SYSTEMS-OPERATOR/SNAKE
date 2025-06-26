@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import type { Cell, Direction } from '../core/Grid';
 import type { IShapeAdapter } from './IShapeAdapter';
 
+/**
+ * Projects grid coordinates onto the six faces of a cube. Wrapping logic maps
+ * movements across an edge to the adjacent face, preserving direction.
+ */
 export class CubeAdapter implements IShapeAdapter {
   constructor(private size = 10) {}
 
@@ -13,6 +17,7 @@ export class CubeAdapter implements IShapeAdapter {
     return 6;
   }
 
+  /** Convert a grid cell to world space on the cube surface. */
   toWorld(cell: Cell): THREE.Vector3 {
     const offset = this.size / 2 - 0.5;
     const x = cell.u - offset;
@@ -35,6 +40,10 @@ export class CubeAdapter implements IShapeAdapter {
     }
   }
 
+  /**
+   * Wrap a cell when moving off one face to the neighbor face. The direction
+   * determines which face transition to perform.
+   */
   wrap(cell: Cell, dir: Direction): Cell {
     const { face } = cell;
     let { u, v } = cell;
