@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,26 @@
     <title>Snake on Surfaces</title>
   </head>
   <body>
-    <div id="score" style="position: absolute; top: 10px; left: 10px; color: white;">Score: 0</div>
+    <div
+      id="score"
+      style="position: absolute; top: 10px; right: 10px; color: white"
+    >
+      Score: 0
+    </div>
+    <div
+      id="game-over"
+      style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: red;
+        font-size: 2em;
+        display: none;
+      "
+    >
+      Game Over
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

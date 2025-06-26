@@ -9,6 +9,7 @@ import { Score } from './core/Score';
 import { Input } from './core/Input';
 
 const scoreEl = document.getElementById('score') as HTMLDivElement;
+const gameOverEl = document.getElementById('game-over') as HTMLDivElement;
 
 const shape = new URLSearchParams(window.location.search).get('shape');
 const adapter = shape === 'sphere' ? new SphereAdapter(5) : new CubeAdapter(5);
@@ -28,6 +29,7 @@ function resetGame() {
   score.value = 0;
   fruit.spawn(snake.body);
   scoreEl.textContent = 'Score: 0';
+  gameOverEl.style.display = 'none';
   loop.state = 1; // RUNNING
 }
 
@@ -36,6 +38,7 @@ const loop = new GameLoop(() => {
   const next = grid.getNeighbor(snake.body[0], snake.direction);
   if (snake.hitsSelf(next)) {
     loop.state = 2; // GAME_OVER
+    gameOverEl.style.display = 'block';
     return;
   }
   snake.step(next);
@@ -59,4 +62,3 @@ try {
 } catch (err) {
   console.error('Game error:', err);
 }
-
