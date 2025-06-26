@@ -4,6 +4,8 @@ from .ishape_adapter import Cell, IShapeAdapter
 
 
 class CubeAdapter(IShapeAdapter):
+    """Adapter projecting grid cells onto a cube surface with edge wrapping."""
+
     def __init__(self, size: int = 10) -> None:
         self.size = size
 
@@ -14,6 +16,7 @@ class CubeAdapter(IShapeAdapter):
         return 6
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
+        """Convert a grid cell to world coordinates on the cube."""
         offset = self.size / 2 - 0.5
         x = cell.u - offset
         y = offset - cell.v
@@ -32,6 +35,7 @@ class CubeAdapter(IShapeAdapter):
         return (0.0, 0.0, 0.0)
 
     def wrap(self, cell: Cell, direction: str) -> Cell:
+        """Wrap a cell across cube faces when moving off an edge."""
         face = cell.face
         u = cell.u
         v = cell.v
