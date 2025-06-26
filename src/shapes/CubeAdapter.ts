@@ -3,6 +3,7 @@ import type { Cell, Direction } from '../core/Grid';
 import type { IShapeAdapter } from './IShapeAdapter';
 
 export class CubeAdapter implements IShapeAdapter {
+  /** Map grid coordinates onto the six faces of a cube. */
   constructor(private size = 10) {}
 
   getGridSize() {
@@ -13,6 +14,13 @@ export class CubeAdapter implements IShapeAdapter {
     return 6;
   }
 
+  /**
+   * Convert a grid cell to world coordinates.
+   *
+   * The cube is centered at the origin with faces aligned to the axes.
+   * An offset of `size / 2 - 0.5` recenters the grid so cell (0,0) sits on the
+   * negative axes.
+   */
   toWorld(cell: Cell): THREE.Vector3 {
     const offset = this.size / 2 - 0.5;
     const x = cell.u - offset;
@@ -35,6 +43,7 @@ export class CubeAdapter implements IShapeAdapter {
     }
   }
 
+  /** Wrap a cell crossing one face to its neighbor face. */
   wrap(cell: Cell, dir: Direction): Cell {
     const { face } = cell;
     let { u, v } = cell;

@@ -4,6 +4,8 @@ from .ishape_adapter import Cell, IShapeAdapter
 
 
 class CubeAdapter(IShapeAdapter):
+    """Map grid coordinates onto the six faces of a cube."""
+
     def __init__(self, size: int = 10) -> None:
         self.size = size
 
@@ -14,6 +16,13 @@ class CubeAdapter(IShapeAdapter):
         return 6
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
+        """Translate a grid cell to world coordinates.
+
+        The cube is centered at the origin with each face aligned to an axis.
+        The grid spans ``size`` units per face so an offset of ``size / 2 - 0.5``
+        centers cell ``(0,0)`` on the negative axes.
+        """
+
         offset = self.size / 2 - 0.5
         x = cell.u - offset
         y = offset - cell.v
@@ -32,6 +41,7 @@ class CubeAdapter(IShapeAdapter):
         return (0.0, 0.0, 0.0)
 
     def wrap(self, cell: Cell, direction: str) -> Cell:
+        """Wrap a cell that moves beyond one face to the opposite face."""
         face = cell.face
         u = cell.u
         v = cell.v
