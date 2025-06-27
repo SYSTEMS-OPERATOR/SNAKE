@@ -26,12 +26,17 @@ export class Input {
       d: 'right',
     } as const;
 
+    if (e.key === ' ' || e.key === 'r' || map[e.key]) {
+      e.preventDefault();
+    }
+
     if (e.key === ' ') {
       this.onToggle();
     }
     if (e.key === 'r') {
       this.onReset();
     }
+
     const dir = map[e.key];
     if (dir) {
       this.snake.enqueueDirection(dir);
