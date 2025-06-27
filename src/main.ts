@@ -8,13 +8,18 @@ import { GameRenderer } from './render/GameRenderer';
 import { Fruit } from './core/Fruit';
 import { Score } from './core/Score';
 import { Input } from './core/Input';
+import { playDie } from './utils/Sound';
 
 const scoreEl = document.getElementById('score') as HTMLDivElement;
-const instructionsEl = document.getElementById('instructions') as HTMLDivElement;
+const instructionsEl = document.getElementById(
+  'instructions'
+) as HTMLDivElement;
 const gameoverEl = document.getElementById('gameover') as HTMLDivElement;
 const menuEl = document.getElementById('menu') as HTMLDivElement;
 const form = document.getElementById('start-form') as HTMLFormElement;
-const shapeSelect = document.getElementById('shape-select') as HTMLSelectElement;
+const shapeSelect = document.getElementById(
+  'shape-select'
+) as HTMLSelectElement;
 const gridInput = document.getElementById('grid-input') as HTMLInputElement;
 const speedInput = document.getElementById('speed-input') as HTMLInputElement;
 
@@ -50,7 +55,11 @@ function startGame() {
         ? new CylinderAdapter(size)
         : new CubeAdapter(size);
   grid = new Grid(size, adapter);
-  snake = new Snake({ face: 0, u: Math.floor(size / 2), v: Math.floor(size / 2) });
+  snake = new Snake({
+    face: 0,
+    u: Math.floor(size / 2),
+    v: Math.floor(size / 2),
+  });
   score = new Score();
   fruit = new Fruit(grid, score);
   fruit.spawn(snake.body);
@@ -63,6 +72,7 @@ function startGame() {
     const next = grid.getNeighbor(snake.body[0], snake.direction);
     if (snake.hitsSelf(next)) {
       loop.state = GameState.GAME_OVER;
+      playDie();
       gameoverEl.textContent = `Game Over! Score: ${score.value}\nPress R to restart.`;
       gameoverEl.style.display = 'block';
       return;
@@ -113,5 +123,3 @@ form.addEventListener('submit', (e) => {
 });
 
 menuEl.style.display = 'block';
-
-

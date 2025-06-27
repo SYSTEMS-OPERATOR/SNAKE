@@ -131,6 +131,10 @@ export class GameRenderer {
     }
     // Update fruit position as well
     this.fruitMesh.position.copy(this.adapter.toWorld(this.fruit.cell));
+
+    // Immediately position the new meshes so the next frame
+    // renders the correct state without a one-frame flicker.
+    this.update();
   }
 
   update() {
