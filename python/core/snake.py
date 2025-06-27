@@ -50,12 +50,13 @@ class Snake:
             for c in body
         )
 
-    def out_of_bounds(self, cell: Cell, grid_size: int) -> bool:
+    def out_of_bounds(self, cell: Cell, grid_size: int, face_count: int = 6) -> bool:
+        """Check if a cell lies outside the grid or allowed faces."""
         return (
             cell.u < 0
             or cell.u >= grid_size
             or cell.v < 0
             or cell.v >= grid_size
             or cell.face < 0
-            or cell.face > 5
+            or cell.face >= face_count
         )
