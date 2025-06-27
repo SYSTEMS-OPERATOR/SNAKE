@@ -20,24 +20,26 @@ class Grid:
             for u in range(self.size):
                 for v in range(self.size):
                     if not any(
-                        c.face == face and c.u == u and c.v == v
-                        for c in excluded
+                        c.face == face and c.u == u and c.v == v for c in excluded
                     ):
                         cells.append(Cell(face, u, v))
+        if not cells:
+            raise ValueError("Grid is full; no available cells")
         from random import choice
+
         return choice(cells)
 
     def get_neighbor(self, cell: Cell, direction: direction_type) -> Cell:
         face = cell.face
         u = cell.u
         v = cell.v
-        if direction == 'up':
+        if direction == "up":
             v -= 1
-        elif direction == 'down':
+        elif direction == "down":
             v += 1
-        elif direction == 'left':
+        elif direction == "left":
             u -= 1
-        elif direction == 'right':
+        elif direction == "right":
             u += 1
         if u < 0 or u >= self.size or v < 0 or v >= self.size:
             return self.adapter.wrap(Cell(face, u, v), direction)
