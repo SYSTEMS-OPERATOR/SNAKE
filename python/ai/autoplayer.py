@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import random
-from typing import Callable
 
 from ..core.grid import Grid, direction_type
 from ..core.snake import Snake
