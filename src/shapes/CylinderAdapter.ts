@@ -59,7 +59,8 @@ export class CylinderAdapter implements IShapeAdapter {
    * Wrap coordinates around the cylinder and between faces.
    */
   wrap(cell: Cell, dir: Direction): Cell {
-    let { face, u, v } = cell;
+    const { face } = cell;
+    let { u, v } = cell;
     const last = this.size - 1;
     switch (face) {
       case 0: // side
