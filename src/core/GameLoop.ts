@@ -40,7 +40,9 @@ export class GameLoop extends EventTarget {
 
   stop() {
     this.stopped = true;
-    cancelAnimationFrame(this.frame);
+    if (typeof cancelAnimationFrame !== 'undefined') {
+      cancelAnimationFrame(this.frame);
+    }
   }
 
   togglePause() {
@@ -57,6 +59,7 @@ export class GameLoop extends EventTarget {
   gameOver() {
     this.state = GameState.GAME_OVER;
     this.emit('gameover');
+    this.stop();
   }
 
   private tick = (time: number) => {
