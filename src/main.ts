@@ -81,7 +81,11 @@ function startGame() {
 
   loop = new GameLoop(update);
   input = new Input(snake, () => loop.togglePause(), resetGame);
-  renderer = new GameRenderer(snake, fruit, adapter, true);
+  const useControls = !('ontouchstart' in window);
+  renderer = new GameRenderer(snake, fruit, adapter, useControls);
+  if (navigator.xr) {
+    renderer.enableAR();
+  }
   loop.addEventListener('tick', () => renderer.update());
 
   scoreEl.textContent = 'Score: 0';
