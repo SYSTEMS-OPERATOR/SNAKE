@@ -17,12 +17,17 @@ class GameLoop:
         self.accumulator = 0.0
         self.last_time = 0.0
         self.state = GameState.PAUSED
+        self.stopped = False
 
     def start(self) -> None:
         self.last_time = time.perf_counter()
         self.state = GameState.RUNNING
-        while self.state != GameState.GAME_OVER:
+        self.stopped = False
+        while not self.stopped and self.state != GameState.GAME_OVER:
             self.tick()
+
+    def stop(self) -> None:
+        self.stopped = True
 
     def toggle_pause(self) -> None:
         if self.state == GameState.RUNNING:
@@ -32,6 +37,8 @@ class GameLoop:
             self.last_time = time.perf_counter()
 
     def tick(self) -> None:
+        if self.stopped:
+            return
         now = time.perf_counter()
         delta = now - self.last_time
         self.last_time = now
