@@ -83,9 +83,12 @@ export class GameRenderer {
 
   /**
    * Reset the renderer to match the current snake state.
-   * Removes all segment meshes and recreates the initial head.
+   * Removes all segment meshes and recreates them so the
+   * renderer exactly mirrors the snake body length. This
+   * prevents stale meshes from persisting after a game reset.
    */
   reset() {
+    // Dispose existing meshes
     for (const mesh of this.snakeMeshes) {
       this.scene.remove(mesh);
       mesh.geometry.dispose();
@@ -96,7 +99,15 @@ export class GameRenderer {
       }
     }
     this.snakeMeshes = [];
-    this.ensureSegments();
+
+    // Recreate segment meshes exactly matching the snake length
+    const geom = new THREE.BoxGeometry(1, 1, 1);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+    for (let i = 0; i < this.snake.body.length; i++) {
+      const mesh = new THREE.Mesh(geom, mat);
+      this.scene.add(mesh);
+      this.snakeMeshes.push(mesh);
+    }
     // Update fruit position as well
     this.fruitMesh.position.copy(this.adapter.toWorld(this.fruit.cell));
   }
