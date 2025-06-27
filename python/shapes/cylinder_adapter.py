@@ -70,6 +70,8 @@ class CylinderAdapter(IShapeAdapter):
                 u = 0
             if v < 0 and direction == "down":
                 return Cell(0, u, 0)
+            if v > last and direction == "up":
+                return Cell(0, u, last)
         elif face == 2:
             if u < 0:
                 u = last
@@ -77,4 +79,6 @@ class CylinderAdapter(IShapeAdapter):
                 u = 0
             if v < 0 and direction == "up":
                 return Cell(0, u, last)
+            if v > last and direction == "down":
+                return Cell(0, u, 0)
         return Cell((face), (u + self.size) % self.size, (v + self.size) % self.size)
