@@ -10,16 +10,21 @@ export class Snake {
     this.body = [start];
   }
 
-
   enqueueDirection(dir: Direction) {
     this.nextDirections.push(dir);
   }
 
+  /**
+   * Apply the next queued direction, skipping any that would
+   * immediately reverse the current heading. This avoids
+   * accidental 180° turns when opposite inputs are queued.
+   */
   applyNextDirection() {
-    if (this.nextDirections.length > 0) {
+    while (this.nextDirections.length > 0) {
       const next = this.nextDirections.shift()!;
       if (!this.isOpposite(next)) {
         this.direction = next;
+        break;
       }
     }
   }
