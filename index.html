@@ -14,6 +14,7 @@
       #score,
       #instructions,
       #gameover,
+      #paused,
       #menu {
         position: absolute;
         left: 50%;
@@ -37,6 +38,10 @@
       #gameover {
         display: none;
       }
+      #paused {
+        display: none;
+      }
+
       #dpad {
         position: absolute;
         bottom: 20px;
@@ -62,6 +67,7 @@
   <body>
     <div id="score">Score: 0</div>
     <div id="instructions">Use Arrow keys/WASD or swipe to move. Space to pause. R to reset.</div>
+    <div id="paused">Game Paused</div>
     <div id="gameover"></div>
     <div id="menu">
       <form id="start-form">
