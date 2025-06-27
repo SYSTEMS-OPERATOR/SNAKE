@@ -12,6 +12,8 @@ fits together.
  - Start menu allows selecting **Cube**, **Sphere**, or **Cylinder** surface, grid size and speed.
 - On-screen instructions explain keyboard controls.
 - Game over overlay shows final score with a prompt to restart.
+- Optional WebXR button enables AR mode on supported devices.
+- Mobile play uses on-screen D-pad or swipe gestures.
 - Images below show these features in action.
 
 ## Getting Started
@@ -19,6 +21,7 @@ fits together.
 Clone the repository and install dependencies with `npm install`.
 Run `npm run dev` to start the development server and open `localhost:5173` in your browser.
 Execute `npm test` to run the Vitest suite.
+If your browser supports WebXR, an **Enter AR** button will appear once the game starts.
 You can also try the Python CLI version with `python run_snake.py cube`, `python run_snake.py sphere` or `python run_snake.py cylinder`.
 After each round it will prompt to play again.
 
@@ -35,6 +38,7 @@ Press **R** to reset the game after a game over.
 Eat the red fruit to grow longer and earn points. The current score is shown in the
 top-left corner when running the web version. Colliding with your own body ends the
 game.
+On touch devices you can swipe or use the on-screen D-pad. Moving your phone rotates the camera when not using mouse controls.
 
 When the page first loads you'll see a **start menu** where you can choose the
 surface shape, grid size and snake speed. After clicking Start, a short

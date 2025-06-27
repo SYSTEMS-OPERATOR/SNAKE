@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { ARButton } from 'three/examples/jsm/webxr/ARButton.js';
 import type { Snake } from '../core/Snake';
 import type { Fruit } from '../core/Fruit';
 import type { IShapeAdapter } from '../shapes/IShapeAdapter';
@@ -10,6 +11,9 @@ export class GameRenderer {
   light: THREE.AmbientLight;
   renderer: THREE.WebGLRenderer;
   controls?: OrbitControls;
+  private arButton?: HTMLElement;
+  private orientationHandler?: (e: DeviceOrientationEvent) => void;
+  private orientationActive = false;
   snakeMeshes: THREE.Mesh[] = [];
   fruitMesh: THREE.Mesh;
   dom: HTMLElement;
@@ -39,6 +43,16 @@ export class GameRenderer {
 
     if (withControls) {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    } else if ('DeviceOrientationEvent' in window) {
+      this.orientationHandler = (e: DeviceOrientationEvent) => {
+        const alpha = (e.alpha ?? 0) * (Math.PI / 180);
+        const radius = adapter.getGridSize().u * 1.5;
+        this.camera.position.x = radius * Math.sin(alpha);
+        this.camera.position.z = radius * Math.cos(alpha);
+        this.camera.lookAt(0, 0, 0);
+      };
+      window.addEventListener('deviceorientation', this.orientationHandler);
+      this.orientationActive = true;
     }
 
     const geom = new THREE.BoxGeometry(1, 1, 1);
@@ -79,6 +93,13 @@ export class GameRenderer {
         }
       }
     }
+  }
+
+  /** Enable WebXR AR mode if supported. */
+  enableAR() {
+    this.renderer.xr.enabled = true;
+    this.arButton = ARButton.createButton(this.renderer);
+    document.body.appendChild(this.arButton);
   }
 
   /**
@@ -135,6 +156,12 @@ export class GameRenderer {
     this.scene.remove(this.light);
     if (this.controls) {
       this.controls.dispose();
+    }
+    if (this.orientationActive && this.orientationHandler) {
+      window.removeEventListener('deviceorientation', this.orientationHandler);
+    }
+    if (this.arButton && this.arButton.parentElement) {
+      this.arButton.parentElement.removeChild(this.arButton);
     }
     this.renderer.dispose();
     if (this.dom.parentElement) {

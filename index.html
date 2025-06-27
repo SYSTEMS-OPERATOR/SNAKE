@@ -37,11 +37,31 @@
       #gameover {
         display: none;
       }
+      #dpad {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        user-select: none;
+      }
+      #dpad-row {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+      }
+      #dpad button {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+      }
     </style>
   </head>
   <body>
     <div id="score">Score: 0</div>
-    <div id="instructions">Use Arrow keys/WASD to move. Space to pause. R to reset.</div>
+    <div id="instructions">Use Arrow keys/WASD or swipe to move. Space to pause. R to reset.</div>
     <div id="gameover"></div>
     <div id="menu">
       <form id="start-form">
@@ -62,6 +82,14 @@
         </div>
         <button type="submit">Start Game</button>
       </form>
+    </div>
+    <div id="dpad" style="display:none;">
+      <button id="dpad-up">▲</button>
+      <div id="dpad-row">
+        <button id="dpad-left">◀</button>
+        <button id="dpad-down">▼</button>
+        <button id="dpad-right">▶</button>
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
