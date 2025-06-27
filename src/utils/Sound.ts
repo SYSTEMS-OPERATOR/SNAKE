@@ -1,0 +1,35 @@
+export function playTone(freq: number, duration: number) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    const ctx = new (window.AudioContext ||
+      (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    gain.gain.setValueAtTime(1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
+    osc.onended = () => ctx.close();
+  } catch {
+    // ignore failures (e.g., AudioContext not allowed)
+  }
+}
+
+export function playEat() {
+  playTone(880, 0.1);
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    navigator.vibrate(50);
+  }
+}
+
+export function playDie() {
+  playTone(220, 0.3);
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    navigator.vibrate([100, 50, 100]);
+  }
+}
