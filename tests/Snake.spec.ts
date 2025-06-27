@@ -35,4 +35,12 @@ describe('Snake mechanics', () => {
     snake.step(next);
     expect(snake.body[0]).toEqual({ face: 0, u: 1, v: 2 });
   });
+
+  it('skips opposite directions in the queue', () => {
+    const snake = new Snake({ face: 0, u: 1, v: 1 });
+    snake.enqueueDirection('left');
+    snake.enqueueDirection('up');
+    snake.applyNextDirection();
+    expect(snake.direction).toBe('up');
+  });
 });

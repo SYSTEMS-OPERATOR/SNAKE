@@ -37,3 +37,13 @@ def test_direction_applied_before_move():
     next_cell = grid.get_neighbor(snake.body[0], snake.direction)
     snake.step(next_cell)
     assert snake.body[0] == Cell(0, 1, 2)
+
+
+def test_skips_opposite_in_queue():
+    adapter = CubeAdapter(3)
+    grid = Grid(3, adapter)
+    snake = Snake([Cell(0, 1, 1)])
+    snake.enqueue_direction('left')
+    snake.enqueue_direction('up')
+    snake.apply_next_direction()
+    assert snake.direction == 'up'

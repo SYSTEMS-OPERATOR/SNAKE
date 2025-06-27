@@ -24,10 +24,12 @@ class Snake:
         )
 
     def apply_next_direction(self) -> None:
-        if self.next_directions:
+        """Apply the next queued direction, skipping opposites."""
+        while self.next_directions:
             next_dir = self.next_directions.pop(0)
             if not self.is_opposite(next_dir):
                 self.direction = next_dir
+                break
 
     def step(self, next_head: Cell) -> None:
         self.body.insert(0, next_head)
