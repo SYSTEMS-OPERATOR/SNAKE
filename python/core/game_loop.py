@@ -44,7 +44,7 @@ class GameLoop:
         self.last_time = now
         if self.state == GameState.RUNNING:
             self.accumulator += delta
-            while self.accumulator >= self.TICK:
+            while self.accumulator >= self.TICK and self.state == GameState.RUNNING:
                 self.update(self.TICK)
                 self.accumulator -= self.TICK
         time.sleep(0.01)
