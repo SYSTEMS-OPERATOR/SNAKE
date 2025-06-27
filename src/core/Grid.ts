@@ -22,6 +22,9 @@ export class Grid {
         }
       }
     }
+    if (cells.length === 0) {
+      throw new Error('Grid is full; no available cells');
+    }
     return cells[Math.floor(Math.random() * cells.length)];
   }
 
