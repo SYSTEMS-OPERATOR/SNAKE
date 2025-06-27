@@ -67,7 +67,10 @@ export class GameLoop extends EventTarget {
     this.lastTime = time;
     if (this.state === GameState.RUNNING) {
       this.accumulator += delta;
-      while (this.accumulator >= GameLoop.TICK) {
+      while (
+        this.accumulator >= GameLoop.TICK &&
+        this.state === GameState.RUNNING
+      ) {
         this.update(GameLoop.TICK / 1000);
         this.emit('tick');
         this.accumulator -= GameLoop.TICK;
