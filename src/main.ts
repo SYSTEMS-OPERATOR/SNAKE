@@ -1,6 +1,6 @@
 import { Grid } from './core/Grid';
 import { Snake } from './core/Snake';
-import { GameLoop, GameState } from './core/GameLoop';
+import { GameLoop } from './core/GameLoop';
 import { CubeAdapter } from './shapes/CubeAdapter';
 import { SphereAdapter } from './shapes/SphereAdapter';
 import { CylinderAdapter } from './shapes/CylinderAdapter';
@@ -12,6 +12,7 @@ import { Input } from './core/Input';
 const scoreEl = document.getElementById('score') as HTMLDivElement;
 const instructionsEl = document.getElementById('instructions') as HTMLDivElement;
 const gameoverEl = document.getElementById('gameover') as HTMLDivElement;
+const pausedEl = document.getElementById('paused') as HTMLDivElement;
 const menuEl = document.getElementById('menu') as HTMLDivElement;
 const form = document.getElementById('start-form') as HTMLFormElement;
 const shapeSelect = document.getElementById('shape-select') as HTMLSelectElement;
@@ -37,6 +38,7 @@ function showInstructions() {
 function startGame() {
   menuEl.style.display = 'none';
   gameoverEl.style.display = 'none';
+  pausedEl.style.display = 'none';
 
   const size = parseInt(gridInput.value, 10);
   const speed = parseInt(speedInput.value, 10);
@@ -58,13 +60,16 @@ function startGame() {
     scoreEl.textContent = `Score: ${score.value}`;
   });
 
+  function onGameOver() {
+    gameoverEl.textContent = `Game Over! Score: ${score.value}\nPress R to restart.`;
+    gameoverEl.style.display = 'block';
+  }
+
   function update() {
     snake.applyNextDirection();
     const next = grid.getNeighbor(snake.body[0], snake.direction);
     if (snake.hitsSelf(next)) {
-      loop.state = GameState.GAME_OVER;
-      gameoverEl.textContent = `Game Over! Score: ${score.value}\nPress R to restart.`;
-      gameoverEl.style.display = 'block';
+      loop.gameOver();
       return;
     }
     snake.step(next);
@@ -86,7 +91,14 @@ function startGame() {
   if (navigator.xr) {
     renderer.enableAR();
   }
-  loop.addEventListener('tick', () => renderer.update());
+  loop.on('tick', () => renderer.update());
+  loop.on('pause', () => {
+    pausedEl.style.display = 'block';
+  });
+  loop.on('resume', () => {
+    pausedEl.style.display = 'none';
+  });
+  loop.on('gameover', onGameOver);
 
   scoreEl.textContent = 'Score: 0';
   showInstructions();

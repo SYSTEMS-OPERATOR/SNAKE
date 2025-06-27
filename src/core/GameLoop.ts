@@ -4,7 +4,11 @@ export enum GameState {
   GAME_OVER,
 }
 
-export type GameLoopEventType = 'tick';
+export type GameLoopEventType =
+  | 'tick'
+  | 'pause'
+  | 'resume'
+  | 'gameover';
 
 export class GameLoop extends EventTarget {
   static TICK = 150; // ms per move
@@ -29,6 +33,7 @@ export class GameLoop extends EventTarget {
   start() {
     this.lastTime = performance.now();
     this.state = GameState.RUNNING;
+    this.emit('resume');
     this.stopped = false;
     this.frame = requestAnimationFrame(this.tick);
   }
@@ -41,10 +46,17 @@ export class GameLoop extends EventTarget {
   togglePause() {
     if (this.state === GameState.RUNNING) {
       this.state = GameState.PAUSED;
+      this.emit('pause');
     } else {
       this.state = GameState.RUNNING;
       this.lastTime = performance.now();
+      this.emit('resume');
     }
+  }
+
+  gameOver() {
+    this.state = GameState.GAME_OVER;
+    this.emit('gameover');
   }
 
   private tick = (time: number) => {
