@@ -17,7 +17,13 @@ export class CubeAdapter implements IShapeAdapter {
     return 6;
   }
 
-  /** Convert a grid cell to world space on the cube surface. */
+  /**
+   * Convert a grid cell to world space on the cube surface.
+   *
+   * The cube is centered at the origin with each face having a unit grid. The
+   * cell's `u` and `v` are offset so that (0,0) maps to the top-left corner of a
+   * face.
+   */
   toWorld(cell: Cell): THREE.Vector3 {
     const offset = this.size / 2 - 0.5;
     const x = cell.u - offset;
@@ -41,8 +47,11 @@ export class CubeAdapter implements IShapeAdapter {
   }
 
   /**
-   * Wrap a cell when moving off one face to the neighbor face. The direction
-   * determines which face transition to perform.
+   * Wrap a cell when moving off one face to its neighboring face.
+   *
+   * The mapping preserves movement direction so the snake seamlessly crosses
+   * cube edges. Coordinates that don't trigger a face change are wrapped modulo
+   * the grid size on the current face.
    */
   wrap(cell: Cell, dir: Direction): Cell {
     const { face } = cell;

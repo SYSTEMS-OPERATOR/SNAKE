@@ -18,6 +18,11 @@ class CylinderAdapter(IShapeAdapter):
         return 3
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
+        """Convert a grid cell to world coordinates on the cylinder.
+
+        ``u`` controls rotation around the central axis while ``v`` maps either
+        to height (side) or radial distance (caps).
+        """
         angle = (cell.u + 0.5) * (2 * math.pi / self.size)
         offset = self.size / 2 - 0.5
         if cell.face == 0:  # side
@@ -40,6 +45,11 @@ class CylinderAdapter(IShapeAdapter):
         return (0.0, 0.0, 0.0)
 
     def wrap(self, cell: Cell, direction: str) -> Cell:
+        """Wrap coordinates across cylinder faces.
+
+        Moving past the top or bottom of the side face enters the respective
+        cap. Horizontal motion around the side wraps modulo the circumference.
+        """
         face = cell.face
         u = cell.u
         v = cell.v

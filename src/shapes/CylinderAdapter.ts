@@ -21,7 +21,12 @@ export class CylinderAdapter implements IShapeAdapter {
     return 3;
   }
 
-  /** Convert a grid cell to world space on the cylinder surface. */
+  /**
+   * Convert a grid cell to world space on the cylinder surface.
+   *
+   * `u` rotates around the cylinder's axis while `v` moves along the height.
+   * For the caps, `v` represents radial distance from the center.
+   */
   toWorld(cell: Cell): THREE.Vector3 {
     const angle = (cell.u + 0.5) * (2 * Math.PI / this.size);
     const offset = this.size / 2 - 0.5;
@@ -57,6 +62,10 @@ export class CylinderAdapter implements IShapeAdapter {
 
   /**
    * Wrap coordinates around the cylinder and between faces.
+   *
+   * When leaving the side at the top or bottom the cell transitions to the
+   * respective cap. Horizontal movement around the side wraps modulo the grid
+   * width.
    */
   wrap(cell: Cell, dir: Direction): Cell {
     const { face } = cell;

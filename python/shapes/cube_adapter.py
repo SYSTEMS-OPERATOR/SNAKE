@@ -16,7 +16,11 @@ class CubeAdapter(IShapeAdapter):
         return 6
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
-        """Convert a grid cell to world coordinates on the cube."""
+        """Convert a grid cell to world coordinates on the cube.
+
+        The cube is centered at the origin. The ``u`` and ``v`` coordinates are
+        offset so that ``(0, 0)`` corresponds to the top-left of each face.
+        """
         offset = self.size / 2 - 0.5
         x = cell.u - offset
         y = offset - cell.v
@@ -35,7 +39,12 @@ class CubeAdapter(IShapeAdapter):
         return (0.0, 0.0, 0.0)
 
     def wrap(self, cell: Cell, direction: str) -> Cell:
-        """Wrap a cell across cube faces when moving off an edge."""
+        """Wrap a cell across cube faces when moving off an edge.
+
+        The movement direction determines which neighbouring face the cell
+        transitions to. Coordinates that don't result in a face change are
+        wrapped modulo the grid size on the current face.
+        """
         face = cell.face
         u = cell.u
         v = cell.v

@@ -20,10 +20,16 @@ export class SphereAdapter implements IShapeAdapter {
     return 1;
   }
 
-  /** Convert a grid cell to a position on the sphere surface. */
+  /**
+   * Convert a grid cell to a point on the sphere surface.
+   *
+   * `u` maps to longitude (phi) and `v` to latitude (theta) using an
+   * equirectangular projection. Half-cell offsets center the cell on the
+   * surface patch.
+   */
   toWorld(cell: Cell): THREE.Vector3 {
-    const phi = (cell.u + 0.5) * (2 * Math.PI / this.size);
-    const theta = (cell.v + 0.5) * (Math.PI / this.size);
+    const phi = (cell.u + 0.5) * (2 * Math.PI / this.size); // longitude
+    const theta = (cell.v + 0.5) * (Math.PI / this.size); // latitude
     const x = this.radius * Math.sin(theta) * Math.cos(phi);
     const y = this.radius * Math.cos(theta);
     const z = this.radius * Math.sin(theta) * Math.sin(phi);
@@ -31,8 +37,11 @@ export class SphereAdapter implements IShapeAdapter {
   }
 
   /**
-   * Wrap a cell around the sphere. Direction is ignored because all edges
-   * connect uniformly in an equirectangular projection.
+   * Wrap a cell around the sphere.
+   *
+   * Because the sphere has no edges, moving off one side simply wraps the
+   * coordinates modulo the grid size. The direction is unused but kept for
+   * parity with other adapters.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   wrap(cell: Cell, _dir: Direction): Cell {
