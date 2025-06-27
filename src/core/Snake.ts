@@ -49,14 +49,14 @@ export class Snake {
     );
   }
 
-  outOfBounds(cell: Cell, gridSize: number) {
+  outOfBounds(cell: Cell, gridSize: number, faceCount = 6) {
     return (
       cell.u < 0 ||
       cell.u >= gridSize ||
       cell.v < 0 ||
       cell.v >= gridSize ||
       cell.face < 0 ||
-      cell.face > 5
+      cell.face >= faceCount
     );
   }
 
