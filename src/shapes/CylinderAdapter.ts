@@ -82,11 +82,13 @@ export class CylinderAdapter implements IShapeAdapter {
         if (u < 0) u = last;
         if (u > last) u = 0;
         if (v < 0 && dir === 'down') return { face: 0, u, v: 0 };
+        if (v > last && dir === 'up') return { face: 0, u, v: last };
         break;
       case 2: // bottom
         if (u < 0) u = last;
         if (u > last) u = 0;
         if (v < 0 && dir === 'up') return { face: 0, u, v: last };
+        if (v > last && dir === 'down') return { face: 0, u, v: 0 };
         break;
     }
     u = (u + this.size) % this.size;
