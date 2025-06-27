@@ -9,7 +9,7 @@ fits together.
 
 ### Recent Updates
 
-- Start menu allows selecting **Cube** or **Sphere** surface, grid size and speed.
+ - Start menu allows selecting **Cube**, **Sphere**, or **Cylinder** surface, grid size and speed.
 - On-screen instructions explain keyboard controls.
 - Game over overlay shows final score with a prompt to restart.
 - Images below show these features in action.
@@ -19,7 +19,7 @@ fits together.
 Clone the repository and install dependencies with `npm install`.
 Run `npm run dev` to start the development server and open `localhost:5173` in your browser.
 Execute `npm test` to run the Vitest suite.
-You can also try the Python CLI version with `python run_snake.py cube` or `python run_snake.py sphere`.
+You can also try the Python CLI version with `python run_snake.py cube`, `python run_snake.py sphere` or `python run_snake.py cylinder`.
 After each round it will prompt to play again.
 
 ## Building for Production
@@ -80,6 +80,7 @@ For a simple text-based demo, run the Python version:
 ```bash
 python run_snake.py            # play on a cube
 python run_snake.py sphere     # play on a sphere
+python run_snake.py cylinder   # play on a cylinder
 ```
 
 Scores print to the console as you eat fruit.

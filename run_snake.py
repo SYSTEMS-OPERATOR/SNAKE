@@ -6,11 +6,17 @@ from python.core.score import Score
 from python.core.game_loop import GameLoop, GameState
 from python.shapes.cube_adapter import CubeAdapter
 from python.shapes.sphere_adapter import SphereAdapter
+from python.shapes.cylinder_adapter import CylinderAdapter
 from python.shapes.ishape_adapter import Cell
 
 
 def main(shape: str = "cube") -> None:
-    adapter = SphereAdapter(5) if shape == "sphere" else CubeAdapter(5)
+    if shape == "sphere":
+        adapter = SphereAdapter(5)
+    elif shape == "cylinder":
+        adapter = CylinderAdapter(5)
+    else:
+        adapter = CubeAdapter(5)
     grid = Grid(5, adapter)
     snake = Snake([Cell(0, 2, 2)])
     score = Score()
@@ -50,12 +56,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Run the Snake game on a cube or sphere surface."
+        description="Run the Snake game on a cube, sphere, or cylinder surface."
     )
     parser.add_argument(
         "shape",
         nargs="?",
-        choices=["cube", "sphere"],
+        choices=["cube", "sphere", "cylinder"],
         default="cube",
         help="Surface shape to play on",
     )
