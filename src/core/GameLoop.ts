@@ -16,6 +16,7 @@ export class GameLoop extends EventTarget {
   private lastTime = 0;
   state: GameState = GameState.PAUSED;
   private frame = 0;
+  private stopped = false;
 
   constructor(private update: (dt: number) => void) {
     super();
@@ -33,10 +34,12 @@ export class GameLoop extends EventTarget {
     this.lastTime = performance.now();
     this.state = GameState.RUNNING;
     this.emit('resume');
+    this.stopped = false;
     this.frame = requestAnimationFrame(this.tick);
   }
 
   stop() {
+    this.stopped = true;
     cancelAnimationFrame(this.frame);
   }
 
@@ -57,6 +60,9 @@ export class GameLoop extends EventTarget {
   }
 
   private tick = (time: number) => {
+    if (this.stopped) {
+      return;
+    }
     const delta = time - this.lastTime;
     this.lastTime = time;
     if (this.state === GameState.RUNNING) {
@@ -67,6 +73,8 @@ export class GameLoop extends EventTarget {
         this.accumulator -= GameLoop.TICK;
       }
     }
-    this.frame = requestAnimationFrame(this.tick);
+    if (!this.stopped) {
+      this.frame = requestAnimationFrame(this.tick);
+    }
   };
 }

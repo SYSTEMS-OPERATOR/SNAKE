@@ -159,6 +159,8 @@ export class GameRenderer {
     }
     if (this.orientationActive && this.orientationHandler) {
       window.removeEventListener('deviceorientation', this.orientationHandler);
+      this.orientationActive = false;
+      this.orientationHandler = undefined;
     }
     if (this.arButton && this.arButton.parentElement) {
       this.arButton.parentElement.removeChild(this.arButton);
