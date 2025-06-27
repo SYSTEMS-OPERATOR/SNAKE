@@ -18,7 +18,11 @@ class SphereAdapter(IShapeAdapter):
         return 1
 
     def to_world(self, cell: Cell) -> Tuple[float, float, float]:
-        """Convert a grid cell to world coordinates on the sphere."""
+        """Convert a grid cell to world coordinates on the sphere.
+
+        ``u`` corresponds to longitude and ``v`` to latitude. Half-cell offsets
+        place the point at the centre of each surface patch.
+        """
         phi = (cell.u + 0.5) * (2 * math.pi / self.size)
         theta = (cell.v + 0.5) * (math.pi / self.size)
         x = self.radius * math.sin(theta) * math.cos(phi)
@@ -27,7 +31,12 @@ class SphereAdapter(IShapeAdapter):
         return (x, y, z)
 
     def wrap(self, cell: Cell, _direction: str) -> Cell:
-        """Wrap coordinates around the sphere uniformly."""
+        """Wrap coordinates around the sphere uniformly.
+
+        The direction argument is ignored because every edge connects
+        continuously on a sphere. ``u`` and ``v`` simply wrap modulo the grid
+        size.
+        """
         u = (cell.u + self.size) % self.size
         v = (cell.v + self.size) % self.size
         return Cell(0, u, v)
