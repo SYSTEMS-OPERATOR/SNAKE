@@ -33,6 +33,11 @@ let input: Input;
 let adapter: CubeAdapter | SphereAdapter | CylinderAdapter;
 let grid: Grid;
 
+let onTickHandler: EventListener;
+let onPauseHandler: EventListener;
+let onResumeHandler: EventListener;
+let onGameOverHandler: EventListener;
+
 function showInstructions() {
   instructionsEl.style.display = 'block';
   setTimeout(() => {
@@ -104,14 +109,18 @@ function startGame() {
   if (navigator.xr) {
     renderer.enableAR();
   }
-  loop.on('tick', () => renderer.update());
-  loop.on('pause', () => {
+  onTickHandler = () => renderer.update();
+  onPauseHandler = () => {
     pausedEl.style.display = 'block';
-  });
-  loop.on('resume', () => {
+  };
+  onResumeHandler = () => {
     pausedEl.style.display = 'none';
-  });
-  loop.on('gameover', onGameOver);
+  };
+  onGameOverHandler = onGameOver;
+  loop.on('tick', onTickHandler);
+  loop.on('pause', onPauseHandler);
+  loop.on('resume', onResumeHandler);
+  loop.on('gameover', onGameOverHandler);
 
   scoreEl.textContent = 'Score: 0';
   showInstructions();
@@ -127,6 +136,10 @@ function resetGame() {
     input.dispose();
   }
   if (loop) {
+    loop.removeEventListener('tick', onTickHandler);
+    loop.removeEventListener('pause', onPauseHandler);
+    loop.removeEventListener('resume', onResumeHandler);
+    loop.removeEventListener('gameover', onGameOverHandler);
     loop.stop();
   }
   startGame();
