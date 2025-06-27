@@ -1,6 +1,6 @@
 import { Grid } from './core/Grid';
 import { Snake } from './core/Snake';
-import { GameLoop } from './core/GameLoop';
+import { GameLoop, GameState } from './core/GameLoop';
 import { CubeAdapter } from './shapes/CubeAdapter';
 import { SphereAdapter } from './shapes/SphereAdapter';
 import { CylinderAdapter } from './shapes/CylinderAdapter';
