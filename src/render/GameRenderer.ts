@@ -55,10 +55,11 @@ export class GameRenderer {
       this.orientationActive = true;
     }
 
-    const geom = new THREE.BoxGeometry(1, 1, 1);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     this.snakeMeshes = this.snake.body.map(() => {
-      const mesh = new THREE.Mesh(geom, mat);
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+      );
       this.scene.add(mesh);
       return mesh;
     });
@@ -73,10 +74,11 @@ export class GameRenderer {
   }
 
   private ensureSegments() {
-    const geom = new THREE.BoxGeometry(1, 1, 1);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     while (this.snakeMeshes.length < this.snake.body.length) {
-      const mesh = new THREE.Mesh(geom, mat);
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+      );
       this.scene.add(mesh);
       this.snakeMeshes.push(mesh);
     }
@@ -122,10 +124,11 @@ export class GameRenderer {
     this.snakeMeshes = [];
 
     // Recreate segment meshes exactly matching the snake length
-    const geom = new THREE.BoxGeometry(1, 1, 1);
-    const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     for (let i = 0; i < this.snake.body.length; i++) {
-      const mesh = new THREE.Mesh(geom, mat);
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+      );
       this.scene.add(mesh);
       this.snakeMeshes.push(mesh);
     }
