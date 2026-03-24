@@ -21,7 +21,6 @@ class Fruit:
         self._score_obj = score
         self._listeners = []
 
-
     def spawn(self, snake_body: list[Cell]) -> None:
         self.cell = self.grid.random_cell(snake_body)
 
@@ -35,4 +34,3 @@ class Fruit:
             self._score_obj.increment()
         for cb in list(self._listeners):
             cb()
-

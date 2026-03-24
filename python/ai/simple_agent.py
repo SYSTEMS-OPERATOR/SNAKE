@@ -1,8 +1,9 @@
 from random import choice
 from typing import List
 
-from ..core.snake import Snake
 from ..core.grid import direction_type
+from ..core.snake import Snake
+
 
 class SimpleAgent:
     """Trivial AI that picks a random non-opposite direction."""

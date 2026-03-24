@@ -42,6 +42,8 @@ class Snake:
         self.grow_flag = True
 
     def hits_self(self, cell: Cell) -> bool:
+        # Dev Agent Breadcrumb: ignore the tail when not growing because
+        # it will move away during the same simulation step.
         body = self.body if self.grow_flag else self.body[:-1]
         return any(
             c.face == cell.face
@@ -50,7 +52,12 @@ class Snake:
             for c in body
         )
 
-    def out_of_bounds(self, cell: Cell, grid_size: int, face_count: int = 6) -> bool:
+    def out_of_bounds(
+        self,
+        cell: Cell,
+        grid_size: int,
+        face_count: int = 6,
+    ) -> bool:
         """Check if a cell lies outside the grid or allowed faces."""
         return (
             cell.u < 0

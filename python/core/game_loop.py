@@ -43,8 +43,13 @@ class GameLoop:
         delta = now - self.last_time
         self.last_time = now
         if self.state == GameState.RUNNING:
+            # Dev Agent Breadcrumb: accumulate frame deltas until a fixed
+            # simulation tick is available, then process deterministic updates.
             self.accumulator += delta
-            while self.accumulator >= self.TICK and self.state == GameState.RUNNING:
+            while (
+                self.accumulator >= self.TICK
+                and self.state == GameState.RUNNING
+            ):
                 self.update(self.TICK)
                 self.accumulator -= self.TICK
         time.sleep(0.01)
