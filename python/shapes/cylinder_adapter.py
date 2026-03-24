@@ -81,4 +81,8 @@ class CylinderAdapter(IShapeAdapter):
                 return Cell(0, u, last)
             if v > last and direction == "down":
                 return Cell(0, u, 0)
-        return Cell((face), (u + self.size) % self.size, (v + self.size) % self.size)
+        return Cell(
+            face,
+            (u + self.size) % self.size,
+            (v + self.size) % self.size,
+        )

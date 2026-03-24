@@ -29,6 +29,8 @@ def main(shape: str = "cube") -> None:
     fruit.on_eaten(on_fruit_eaten)
 
     def update(_dt: float) -> None:
+        # Dev Agent Breadcrumb: process input first, then movement/collision,
+        # then fruit/score updates to keep a predictable game-state pipeline.
         snake.apply_next_direction()
         next_cell = grid.get_neighbor(snake.body[0], snake.direction)
         if snake.hits_self(next_cell):
@@ -45,7 +47,6 @@ def main(shape: str = "cube") -> None:
             fruit.eat()
         print(f"Snake: {snake.body} Fruit: {fruit.cell} Score: {score.value}")
 
-
     loop = GameLoop(update)
     loop.start()
 
@@ -56,7 +57,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Run the Snake game on a cube, sphere, or cylinder surface."
+        description=(
+            "Run the Snake game on a cube, sphere, or cylinder surface."
+        )
     )
     parser.add_argument(
         "shape",

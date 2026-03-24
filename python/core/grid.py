@@ -19,8 +19,11 @@ class Grid:
         for face in range(self.adapter.get_face_count()):
             for u in range(self.size):
                 for v in range(self.size):
+                    # Dev Agent Breadcrumb: build a complete candidate list so
+                    # fruit spawning stays deterministic for a given RNG seed.
                     if not any(
-                        c.face == face and c.u == u and c.v == v for c in excluded
+                        c.face == face and c.u == u and c.v == v
+                        for c in excluded
                     ):
                         cells.append(Cell(face, u, v))
         if not cells:

@@ -9,7 +9,7 @@ from ..core.fruit import Fruit
 
 
 def choose_direction(snake: Snake, grid: Grid, fruit: Fruit) -> direction_type:
-    """Choose a naive direction toward the fruit avoiding immediate self collision."""
+    """Choose a naive move toward fruit while avoiding self-collision."""
     head = snake.body[0]
     target = fruit.cell
     grid_size = grid.size
@@ -18,6 +18,8 @@ def choose_direction(snake: Snake, grid: Grid, fruit: Fruit) -> direction_type:
         next_cell = grid.get_neighbor(head, direction)
         if snake.hits_self(next_cell):
             continue
+        # Dev Agent Breadcrumb: use wrap-aware Manhattan distance as a compact
+        # heuristic so the autoplayer can operate on non-planar surfaces.
         du = abs(next_cell.u - target.u)
         dv = abs(next_cell.v - target.v)
         du = min(du, grid_size - du)
